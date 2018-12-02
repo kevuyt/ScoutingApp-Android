@@ -1,6 +1,5 @@
 package archishmaan.com.scoutingapp.Activities;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,18 +10,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.util.List;
-
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
  * Project: ScoutingApp
  */
-public class ScoutingActivity extends Fragment {
-    private Button stash;
+public class ScoutingActivity extends Fragment implements View.OnClickListener {
     private EditText matchNum;
     private EditText teamNum;
     private CheckBox autoDrop;
@@ -34,13 +36,14 @@ public class ScoutingActivity extends Fragment {
     private CheckBox endHang;
     private CheckBox endPartPark;
     private CheckBox endFullPark;
-    private static List<ScoutingModel> matches;
     private View view;
+    static List<ScoutingModel> matches;
+
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.scouting_activity, null);
-        stash = view.findViewById(R.id.stash);
+        view = inflater.inflate(R.layout.scouting_activity, container, false);
+        Button stash = view.findViewById(R.id.stash);
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
         autoDrop = view.findViewById((R.id.auto_drop));
@@ -54,11 +57,10 @@ public class ScoutingActivity extends Fragment {
         endFullPark = view.findViewById((R.id.end_full_park));
 
         stash.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(View view) {
-
-                matches.add(new ScoutingModel(Integer.parseInt(matchNum.getText().toString()),
+            public void onClick(View v) {
+                matches.add(new ScoutingModel(
+                        Integer.parseInt(matchNum.getText().toString()),
                         Integer.parseInt(teamNum.getText().toString()),
                         Integer.parseInt(depot.getText().toString()),
                         Integer.parseInt(lander.getText().toString()),
@@ -69,11 +71,24 @@ public class ScoutingActivity extends Fragment {
                         Boolean.parseBoolean(endHang.getText().toString()),
                         Boolean.parseBoolean(endPartPark.getText().toString()),
                         Boolean.parseBoolean(endFullPark.getText().toString())));
+                try {
+                    String filepath = "c://stash_activity.xml"
+                    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+                    Document doc = docBuilder.parse(filepath);
+
+                    Node contraintLayout = doc.getElementsByTagName("android.support.constraint.ConstraintLayout").item(0);
+                    Node listView = doc.getElementsByTagName("ListView").item(0);
+
+                }
+
+                 Button setText = view.findViewById(R.id.scouting_data_button + match);
+                 setText.setText(Integer.parseInt(teamNum.getText().toString()) + " - " + Integer.parseInt(matchNum.getText().toString()));
             }
         });
         return view;
     }
-    public static List<ScoutingModel> getMatches () {
-        return matches;
-    }
+
+    public static List<ScoutingModel> getMatches () {return matches;}
+
 }

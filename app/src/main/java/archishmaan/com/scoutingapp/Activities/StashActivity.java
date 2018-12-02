@@ -18,10 +18,10 @@ import archishmaan.com.scoutingapp.R;
  * Project: ScoutingApp
  */
 public class StashActivity extends Fragment {
-    /*@Nullable
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.stash_activity, null);
-for (ScoutingModel match : ScoutingActivity.getMatches()){ match.get }
-    }*/
+//for (ScoutingModel match : ScoutingActivity.getMatches()){ match.getMatchNumber(),  }
+   // }
 }
