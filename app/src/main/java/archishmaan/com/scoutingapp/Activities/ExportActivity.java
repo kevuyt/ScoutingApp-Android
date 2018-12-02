@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp;
+package archishmaan.com.scoutingapp.Activities;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
