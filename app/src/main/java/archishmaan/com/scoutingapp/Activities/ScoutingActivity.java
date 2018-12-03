@@ -56,39 +56,24 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         endPartPark = view.findViewById((R.id.end_partial_park));
         endFullPark = view.findViewById((R.id.end_full_park));
 
-        stash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                matches.add(new ScoutingModel(
-                        Integer.parseInt(matchNum.getText().toString()),
-                        Integer.parseInt(teamNum.getText().toString()),
-                        Integer.parseInt(depot.getText().toString()),
-                        Integer.parseInt(lander.getText().toString()),
-                        Boolean.parseBoolean(autoDrop.getText().toString()),
-                        Boolean.parseBoolean(marker.getText().toString()),
-                        Boolean.parseBoolean(autoPark.getText().toString()),
-                        Boolean.parseBoolean(sample.getText().toString()),
-                        Boolean.parseBoolean(endHang.getText().toString()),
-                        Boolean.parseBoolean(endPartPark.getText().toString()),
-                        Boolean.parseBoolean(endFullPark.getText().toString())));
-                try {
-                    String filepath = "c://stash_activity.xml"
-                    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                    Document doc = docBuilder.parse(filepath);
-
-                    Node contraintLayout = doc.getElementsByTagName("android.support.constraint.ConstraintLayout").item(0);
-                    Node listView = doc.getElementsByTagName("ListView").item(0);
-
-                }
-
-                 Button setText = view.findViewById(R.id.scouting_data_button + match);
-                 setText.setText(Integer.parseInt(teamNum.getText().toString()) + " - " + Integer.parseInt(matchNum.getText().toString()));
-            }
-        });
+        stash.setOnClickListener(this);
         return view;
     }
-
+    @Override
+    public void onClick(View v) {
+        matches.add(new ScoutingModel(
+                Integer.parseInt(matchNum.getText().toString()),
+                Integer.parseInt(teamNum.getText().toString()),
+                Integer.parseInt(depot.getText().toString()),
+                Integer.parseInt(lander.getText().toString()),
+                Boolean.parseBoolean(autoDrop.getText().toString()),
+                Boolean.parseBoolean(marker.getText().toString()),
+                Boolean.parseBoolean(autoPark.getText().toString()),
+                Boolean.parseBoolean(sample.getText().toString()),
+                Boolean.parseBoolean(endHang.getText().toString()),
+                Boolean.parseBoolean(endPartPark.getText().toString()),
+                Boolean.parseBoolean(endFullPark.getText().toString())));
+    }
     public static List<ScoutingModel> getMatches () {return matches;}
 
 }
