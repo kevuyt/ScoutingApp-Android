@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new ScoutingActivity();
                 break;
 
+            case R.id.stash:
+                fragment = new StashActivity();
+                break;
+
+            case R.id.export:
+                fragment = new StashActivity();
+                break;
+
             default:
                 break;
         }
@@ -53,6 +61,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .commit();
             return true;
         }
-        return false;
+            return false;
     }
 }
