@@ -72,6 +72,8 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                 Boolean.parseBoolean(endHang.getText().toString()),
                 Boolean.parseBoolean(endPartPark.getText().toString()),
                 Boolean.parseBoolean(endFullPark.getText().toString())));
+
+        //TODO Make stash button not crash app
     }
     public static List<ScoutingModel> getMatches () {return matches;}
 
