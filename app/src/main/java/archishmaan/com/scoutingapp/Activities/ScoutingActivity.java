@@ -1,9 +1,9 @@
 package archishmaan.com.scoutingapp.Activities;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +11,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import java.util.List;
+
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -60,18 +56,21 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        matches.add(new ScoutingModel(
-                Integer.parseInt(matchNum.getText().toString()),
-                Integer.parseInt(teamNum.getText().toString()),
-                Integer.parseInt(depot.getText().toString()),
-                Integer.parseInt(lander.getText().toString()),
-                Boolean.parseBoolean(autoDrop.getText().toString()),
-                Boolean.parseBoolean(marker.getText().toString()),
-                Boolean.parseBoolean(autoPark.getText().toString()),
-                Boolean.parseBoolean(sample.getText().toString()),
-                Boolean.parseBoolean(endHang.getText().toString()),
-                Boolean.parseBoolean(endPartPark.getText().toString()),
-                Boolean.parseBoolean(endFullPark.getText().toString())));
+        matches.add(
+                new ScoutingModel(
+                    Integer.parseInt(matchNum.getText().toString()),
+                    Integer.parseInt(teamNum.getText().toString()),
+                    Integer.parseInt(depot.getText().toString()),
+                    Integer.parseInt(lander.getText().toString()),
+                    Boolean.parseBoolean(autoDrop.getText().toString()),
+                    Boolean.parseBoolean(marker.getText().toString()),
+                    Boolean.parseBoolean(autoPark.getText().toString()),
+                    Boolean.parseBoolean(sample.getText().toString()),
+                    Boolean.parseBoolean(endHang.getText().toString()),
+                    Boolean.parseBoolean(endPartPark.getText().toString()),
+                    Boolean.parseBoolean(endFullPark.getText().toString())
+                )
+        );
 
         //TODO Make stash button not crash app
     }
