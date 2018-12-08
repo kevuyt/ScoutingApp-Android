@@ -39,15 +39,13 @@ public class StashActivity extends Fragment implements View.OnClickListener {
 
         for (ScoutingModel match : matches){
 
-            LinearLayout linear1 = new LinearLayout(null);
-            linear1.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.addView(linear1);
+
             button = new Button(null);
             button.setText("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
             button.setId(match.getMatchNumber());
             button.setTextSize(15);
             button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            linear1.addView(button);
+            linearLayout.addView(button);
             button.setOnClickListener(this);
             return button;
         }
