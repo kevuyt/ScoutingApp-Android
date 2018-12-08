@@ -31,29 +31,38 @@ public class StashActivity extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.stash_activity, null);
-        scrollView = new ScrollView();
-        LinearLayout linearLayout = new LinearLayout();
-        linearLayout.setOrientation(linearLayout.setOrientation(LinearLayout.VERTICAL););
+       View view = inflater.inflate(R.layout.stash_activity, container, false);
+        scrollView = new ScrollView(null);
+        LinearLayout linearLayout = new LinearLayout(null);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
         for (ScoutingModel match : matches){
 
-            LinearLayout linear1 = new LinearLayout();
+            LinearLayout linear1 = new LinearLayout(null);
             linear1.setOrientation(LinearLayout.VERTICAL);
             linearLayout.addView(linear1);
-            button = new Button();
+            button = new Button(null);
             button.setText("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
             button.setId(match.getMatchNumber());
             button.setTextSize(15);
             button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             linear1.addView(button);
             button.setOnClickListener(this);
+            return button;
         }
+        return view;
     }
 
     @Override
     public void onClick(View view) {
+        scrollView = new ScrollView(null);
+        LinearLayout linearLayout = new LinearLayout(null);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        scrollView.addView(linearLayout);
+        LinearLayout linear2 = new LinearLayout(null);
+        linear2.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.addView(linear2);
 
     }
 }

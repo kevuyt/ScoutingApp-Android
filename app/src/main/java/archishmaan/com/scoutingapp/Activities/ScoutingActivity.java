@@ -36,13 +36,12 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     private CheckBox endHang;
     private CheckBox endPartPark;
     private CheckBox endFullPark;
-    private View view;
     static List<ScoutingModel> matches;
 
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.scouting_activity, container, false);
+        View view = inflater.inflate(R.layout.scouting_activity, container, false);
         Button stash = view.findViewById(R.id.stash);
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
