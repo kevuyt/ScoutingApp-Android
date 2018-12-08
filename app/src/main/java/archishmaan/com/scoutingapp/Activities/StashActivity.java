@@ -54,13 +54,6 @@ public class StashActivity extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        scrollView = new ScrollView(null);
-        LinearLayout linearLayout = new LinearLayout(null);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        scrollView.addView(linearLayout);
-        LinearLayout linear2 = new LinearLayout(null);
-        linear2.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.addView(linear2);
 
     }
 }
