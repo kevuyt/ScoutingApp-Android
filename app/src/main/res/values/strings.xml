@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">ScoutingApp</string>
-    <string name="title_scout">Scout</string>
-    <string name="title_stash">Stash</string>
+    <string name="app_name">Scouting App</string>
+    <string name="title_scout">Scouting</string>
+    <string name="title_stash">Stashed</string>
     <string name="title_export">Export</string>
 </resources>

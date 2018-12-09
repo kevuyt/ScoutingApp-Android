@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
@@ -32,7 +34,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     private CheckBox endHang;
     private CheckBox endPartPark;
     private CheckBox endFullPark;
-    static List<ScoutingModel> matches;
+    static List<ScoutingModel> matches = new ArrayList<>();
 
     @Nullable
     @Override
@@ -50,28 +52,42 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         endHang = view.findViewById((R.id.end_hang));
         endPartPark = view.findViewById((R.id.end_partial_park));
         endFullPark = view.findViewById((R.id.end_full_park));
+        matches.add(new ScoutingModel (1,1,1,1,false,false,false,false,false,false,false));
 
         stash.setOnClickListener(this);
         return view;
     }
     @Override
     public void onClick(View v) {
-        matches.add(
-                new ScoutingModel(
-                    Integer.parseInt(matchNum.getText().toString()),
-                    Integer.parseInt(teamNum.getText().toString()),
-                    Integer.parseInt(depot.getText().toString()),
-                    Integer.parseInt(lander.getText().toString()),
-                    Boolean.parseBoolean(autoDrop.getText().toString()),
-                    Boolean.parseBoolean(marker.getText().toString()),
-                    Boolean.parseBoolean(autoPark.getText().toString()),
-                    Boolean.parseBoolean(sample.getText().toString()),
-                    Boolean.parseBoolean(endHang.getText().toString()),
-                    Boolean.parseBoolean(endPartPark.getText().toString()),
-                    Boolean.parseBoolean(endFullPark.getText().toString())
-                )
-        );
-        //TODO Make stash button not crash app
+            matches.add(
+                    new ScoutingModel(
+                            Integer.parseInt(matchNum.getText().toString()),
+                            Integer.parseInt(teamNum.getText().toString()),
+                            Integer.parseInt(depot.getText().toString()),
+                            Integer.parseInt(lander.getText().toString()),
+                            Boolean.parseBoolean(autoDrop.getText().toString()),
+                            Boolean.parseBoolean(marker.getText().toString()),
+                            Boolean.parseBoolean(autoPark.getText().toString()),
+                            Boolean.parseBoolean(sample.getText().toString()),
+                            Boolean.parseBoolean(endHang.getText().toString()),
+                            Boolean.parseBoolean(endPartPark.getText().toString()),
+                            Boolean.parseBoolean(endFullPark.getText().toString())
+
+                    )
+            );
+
+        matchNum.setText("");
+        teamNum.setText("");
+        autoDrop.setChecked(false);
+        autoPark.setChecked(false);
+        marker.setChecked(false);
+        sample.setChecked(false);
+        depot.setText("");
+        lander.setText("");
+        endHang.setChecked(false);
+        endFullPark.setChecked(false);
+        endPartPark.setChecked(false);
+
     }
     public static List<ScoutingModel> getMatches () {return matches;}
 

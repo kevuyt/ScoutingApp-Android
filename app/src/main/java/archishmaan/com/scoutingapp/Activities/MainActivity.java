@@ -10,6 +10,8 @@ import android.view.MenuItem;
 
 import archishmaan.com.scoutingapp.R;
 
+import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
+
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -38,11 +40,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.stash:
-                fragment = new StashActivity();
+                StashActivity stashActivity = new StashActivity();
+                stashActivity.update();
+                fragment = stashActivity;
                 break;
 
             case R.id.export:
                 fragment = new StashActivity();
+
                 break;
 
             default:
@@ -63,4 +68,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
             return false;
     }
+
 }
