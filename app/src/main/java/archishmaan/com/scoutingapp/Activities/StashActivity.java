@@ -2,6 +2,8 @@ package archishmaan.com.scoutingapp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,24 +40,24 @@ public class StashActivity extends Fragment implements View.OnClickListener {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
-        //Hard coded entry
-        matches.add(new ScoutingModel(1, 1, 1, 1, false, false, false, false, false, false, false));
-
         for (ScoutingModel match : matches) {
             Button button = new Button(getContext());
             button.setText("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
             button.setId(match.getMatchNumber());
             button.setTextSize(15);
-            button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            button.setWidth(1000);
+            button.setHeight(100);
+            button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
             button.setOnClickListener(this);
         }
+
         return scrollView;
     }
 
     @Override
     public void onClick(View view) {
-
+        
     }
 
 }
