@@ -37,21 +37,20 @@ public class StashActivity extends Fragment implements View.OnClickListener {
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
-        return scrollView;
-    }
 
-    public void update() {
-        int i = 0;
-        while (matches.size() > i){
+        //Hard coded entry
+        matches.add(new ScoutingModel(1, 1, 1, 1, false, false, false, false, false, false, false));
+
+        for (ScoutingModel match : matches) {
             Button button = new Button(getContext());
-            button.setText("Match #: " + matches.get(i).getMatchNumber() + ", Team #: " + matches.get(i).getTeamNumber());
-            button.setId(matches.get(i).getMatchNumber());
+            button.setText("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
+            button.setId(match.getMatchNumber());
             button.setTextSize(15);
             button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             linearLayout.addView(button);
             button.setOnClickListener(this);
-            i++;
         }
+        return scrollView;
     }
 
     @Override

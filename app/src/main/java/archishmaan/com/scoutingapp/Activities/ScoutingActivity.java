@@ -52,29 +52,36 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         endHang = view.findViewById((R.id.end_hang));
         endPartPark = view.findViewById((R.id.end_partial_park));
         endFullPark = view.findViewById((R.id.end_full_park));
-        matches.add(new ScoutingModel (1,1,1,1,false,false,false,false,false,false,false));
 
         stash.setOnClickListener(this);
         return view;
     }
     @Override
     public void onClick(View v) {
-            matches.add(
-                    new ScoutingModel(
-                            Integer.parseInt(matchNum.getText().toString()),
-                            Integer.parseInt(teamNum.getText().toString()),
-                            Integer.parseInt(depot.getText().toString()),
-                            Integer.parseInt(lander.getText().toString()),
-                            Boolean.parseBoolean(autoDrop.getText().toString()),
-                            Boolean.parseBoolean(marker.getText().toString()),
-                            Boolean.parseBoolean(autoPark.getText().toString()),
-                            Boolean.parseBoolean(sample.getText().toString()),
-                            Boolean.parseBoolean(endHang.getText().toString()),
-                            Boolean.parseBoolean(endPartPark.getText().toString()),
-                            Boolean.parseBoolean(endFullPark.getText().toString())
-
-                    )
-            );
+    if (String.valueOf(matchNum) != "") {
+        if (String.valueOf(teamNum) != "") {
+            if (String.valueOf(depot) != "") {
+                if (String.valueOf(lander) != "") {
+                    matches.add(
+                            new ScoutingModel(
+                                    Integer.parseInt(String.valueOf(matchNum)),
+                                    Integer.parseInt(String.valueOf(teamNum)),
+                                    Integer.parseInt(String.valueOf(depot)),
+                                    Integer.parseInt(String.valueOf(lander)),
+                                    Boolean.parseBoolean(String.valueOf(autoDrop)),
+                                    Boolean.parseBoolean(String.valueOf(marker)),
+                                    Boolean.parseBoolean(String.valueOf(autoPark)),
+                                    Boolean.parseBoolean(String.valueOf(sample)),
+                                    Boolean.parseBoolean(String.valueOf(endHang)),
+                                    Boolean.parseBoolean(String.valueOf(endPartPark)),
+                                    Boolean.parseBoolean(String.valueOf(endFullPark))
+                            )
+                    );
+                }
+            }
+        }
+    }
+    else
 
         matchNum.setText("");
         teamNum.setText("");
