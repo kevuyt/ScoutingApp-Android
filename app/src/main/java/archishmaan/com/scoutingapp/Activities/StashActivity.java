@@ -1,7 +1,6 @@
 package archishmaan.com.scoutingapp.Activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -13,14 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
-
-import java.util.List;
-
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
-
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 
 /**
@@ -31,6 +25,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     LinearLayout linearLayout;
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        
+    
     }
 
 }
