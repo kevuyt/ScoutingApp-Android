@@ -55,10 +55,10 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-    if (matchNum.getText().toString() != "") {
-        if (teamNum.getText().toString() != "") {
-            if (depot.getText().toString() != "") {
-                if (lander.getText().toString() != "") {
+    if (!matchNum.getText().toString().equals("")) {
+        if (!teamNum.getText().toString().equals("")) {
+            if (!depot.getText().toString().equals("")) {
+                if (!lander.getText().toString().equals("")) {
                     matches.add(
                             new ScoutingModel(
                                     Integer.parseInt(matchNum.getText().toString()),
