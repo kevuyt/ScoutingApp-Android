@@ -10,11 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
 
@@ -94,6 +91,4 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         endPartPark.setChecked(false);
 
     }
-    public static List<ScoutingModel> getMatches () {return matches;}
-
 }
