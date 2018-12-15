@@ -11,7 +11,7 @@
 
 
     <Button
-        android:id="@+id/stash"
+        android:id="@+id/export"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="1000dp"
         android:layout_height="100dp"
