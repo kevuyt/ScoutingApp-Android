@@ -1,6 +1,24 @@
 <resources>
-    <string name="app_name">ScoutingApp</string>
-    <string name="title_scout">Scout</string>
-    <string name="title_stash">Stash</string>
+    <string name="app_name">Scouting App</string>
+    <string name="title_scout">Scouting</string>
+    <string name="title_stash">Stashed</string>
     <string name="title_export">Export</string>
+    <string name="export">Export</string>
+    <string name="stash">STASH</string>
+    <string name="update">UPDATE</string>
+    <string name="details">Details:</string>
+    <string name="match_number">Match Number</string>
+    <string name="team_number">Team Number</string>
+    <string name="auto">Auto:</string>
+    <string name="auto_drop">Drop</string>
+    <string name="marker">Marker</string>
+    <string name="auto_parked">Partial Parked</string>
+    <string name="sample">Sample</string>
+    <string name="teleop">Teleop:</string>
+    <string name="depot_minerals">Depot Minerals</string>
+    <string name="lander_minerals">Lander Minerals</string>
+    <string name="endgame">Endgame</string>
+    <string name="end_hang">Hang</string>
+    <string name="end_partial_park">Partial Park</string>
+    <string name="end_full_park">Full Park</string>
 </resources>

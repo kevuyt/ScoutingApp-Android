@@ -6,11 +6,11 @@
     android:layout_height="835dp"
     android:layout_marginBottom="56dp"
     app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:context=".Activities.ScoutingActivity">
+    app:layout_constraintTop_toTopOf="parent">
+
 
     <Button
-        android:id="@+id/stash"
+        android:id="@+id/update"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="1000dp"
         android:layout_height="100dp"
@@ -18,7 +18,7 @@
         android:layout_marginEnd="8dp"
         android:textSize="29sp"
         android:textColor="@color/colorBlack"
-        android:text="@string/stash"
+        android:text="@string/update"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -67,14 +67,15 @@
                 android:ems="6"
                 android:textSize="29sp"
                 android:hint="@string/team_number"
-                android:inputType="number" />
+                android:inputType="number"
+                />
 
             <TextView
                 android:id="@+id/auto_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/auto"
                 android:textSize="29sp"
+                android:text="@string/auto"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <CheckBox
@@ -110,8 +111,8 @@
                 android:id="@+id/tele_op_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
                 android:text="@string/teleop"
+                android:textSize="29sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <EditText
@@ -130,7 +131,8 @@
                 android:ems="7"
                 android:textSize="29sp"
                 android:hint="@string/lander_minerals"
-                android:inputType="number" />
+                android:inputType="number"
+                />
 
             <TextView
                 android:id="@+id/end_game_label"
