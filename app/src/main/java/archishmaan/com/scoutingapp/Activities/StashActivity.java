@@ -7,12 +7,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+import java.util.Objects;
+
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
@@ -29,7 +34,6 @@ public class StashActivity extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.stash_activity, container, false);
         scrollView = new ScrollView(getContext());
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -45,12 +49,19 @@ public class StashActivity extends Fragment implements View.OnClickListener {
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
             button.setOnClickListener(this);
+
         }
 
         return scrollView;
     }
 
     @Override
-    public void onClick(View view) {}
+    public void onClick(View view) {
+        assert getFragmentManager() != null;
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new EditActivity())
+                .commit();
+    }
 
 }
