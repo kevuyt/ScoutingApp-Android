@@ -74,21 +74,20 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                                     Boolean.parseBoolean(endFullPark.getText().toString())
                             )
                     );
+                    matchNum.setText("");
+                    teamNum.setText("");
+                    autoDrop.setChecked(false);
+                    autoPark.setChecked(false);
+                    marker.setChecked(false);
+                    sample.setChecked(false);
+                    depot.setText("");
+                    lander.setText("");
+                    endHang.setChecked(false);
+                    endFullPark.setChecked(false);
+                    endPartPark.setChecked(false);
                 }
             }
         }
     }
-        matchNum.setText("");
-        teamNum.setText("");
-        autoDrop.setChecked(false);
-        autoPark.setChecked(false);
-        marker.setChecked(false);
-        sample.setChecked(false);
-        depot.setText("");
-        lander.setText("");
-        endHang.setChecked(false);
-        endFullPark.setChecked(false);
-        endPartPark.setChecked(false);
-
     }
 }
