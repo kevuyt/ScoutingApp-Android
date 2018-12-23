@@ -20,17 +20,17 @@ import archishmaan.com.scoutingapp.R;
  * Project: ScoutingApp
  */
 public class ScoutingActivity extends Fragment implements View.OnClickListener {
-    private EditText matchNum;
-    private EditText teamNum;
-    private CheckBox autoDrop;
-    private CheckBox marker;
-    private CheckBox autoPark;
-    private CheckBox sample;
-    private EditText depot;
-    private EditText lander;
-    private CheckBox endHang;
-    private CheckBox endPartPark;
-    private CheckBox endFullPark;
+    public EditText matchNum;
+    public EditText teamNum;
+    public CheckBox autoDrop;
+    public CheckBox marker;
+    public CheckBox autoPark;
+    public CheckBox sample;
+    public EditText depot;
+    public EditText lander;
+    public CheckBox endHang;
+    public CheckBox endPartPark;
+    public CheckBox endFullPark;
     static List<ScoutingModel> matches = new ArrayList<>();
 
     @Nullable
@@ -65,13 +65,13 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                                     Integer.parseInt(teamNum.getText().toString()),
                                     Integer.parseInt(depot.getText().toString()),
                                     Integer.parseInt(lander.getText().toString()),
-                                    Boolean.parseBoolean(autoDrop.getText().toString()),
-                                    Boolean.parseBoolean(marker.getText().toString()),
-                                    Boolean.parseBoolean(autoPark.getText().toString()),
-                                    Boolean.parseBoolean(sample.getText().toString()),
-                                    Boolean.parseBoolean(endHang.getText().toString()),
-                                    Boolean.parseBoolean(endPartPark.getText().toString()),
-                                    Boolean.parseBoolean(endFullPark.getText().toString())
+                                    autoDrop.isChecked(),
+                                    marker.isChecked(),
+                                    autoPark.isChecked(),
+                                    sample.isChecked(),
+                                    endHang.isChecked(),
+                                    endPartPark.isChecked(),
+                                    endFullPark.isChecked()
                             )
                     );
                     matchNum.setText("");

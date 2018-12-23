@@ -16,6 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
@@ -29,7 +32,8 @@ import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 public class StashActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     LinearLayout linearLayout;
-
+    static List<ScoutingModel> updateMatch = new ArrayList<>();
+    ScoutingModel buttonMatch;
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -49,7 +53,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
             button.setOnClickListener(this);
-
+            buttonMatch = match;
         }
 
         return scrollView;
@@ -57,11 +61,13 @@ public class StashActivity extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        updateMatch.add(buttonMatch);
         assert getFragmentManager() != null;
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, new EditActivity())
                 .commit();
+
     }
 
 }
