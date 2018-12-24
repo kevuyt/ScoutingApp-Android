@@ -19,9 +19,9 @@ import archishmaan.com.scoutingapp.R;
 
 public class EditActivity extends Fragment implements View.OnClickListener {
     Button update;
+    int matchesIndex;
     EditText matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
-    int matchIndex;
      public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         update = view.findViewById((R.id.update));
@@ -37,19 +37,18 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endPartParkEdit = view.findViewById((R.id.end_partial_park));
         endFullParkEdit = view.findViewById((R.id.end_full_park));
         update.setOnClickListener(this);
-        matchIndex = updateMatch.get(0).getMatchNumber() - 1;
-        matchNumEdit.setText(matches.get(matchIndex).getMatchNumber());
-        teamNumEdit.setText(matches.get(matchIndex).getTeamNumber());
-        autoDropEdit.setChecked(matches.get(matchIndex).isAutoDrop());
-        autoParkEdit.setChecked(matches.get(matchIndex).isAutoPark());
-        markerEdit.setChecked(matches.get(matchIndex).isMarker());
-        sampleEdit.setChecked(matches.get(matchIndex).isSample());
-        depotEdit.setText(matches.get(matchIndex).getDepot());
-        landerEdit.setText(matches.get(matchIndex).getLander());
-        endHangEdit.setChecked(matches.get(matchIndex).isEndHang());
-        endFullParkEdit.setChecked(matches.get(matchIndex).isFullPark());
-        endPartParkEdit.setChecked(matches.get(matchIndex).isEndPartial());
-
+        matchNumEdit.setText(matches.get(updateMatch.get(0)).getMatchNumber());
+        teamNumEdit.setText(matches.get(updateMatch.get(0)).getTeamNumber());
+        autoDropEdit.setChecked(matches.get(updateMatch.get(0)).isAutoDrop());
+        autoParkEdit.setChecked(matches.get(updateMatch.get(0)).isAutoPark());
+        markerEdit.setChecked(matches.get(updateMatch.get(0)).isMarker());
+        sampleEdit.setChecked(matches.get(updateMatch.get(0)).isSample());
+        depotEdit.setText(matches.get(updateMatch.get(0)).getDepot());
+        landerEdit.setText(matches.get(updateMatch.get(0)).getLander());
+        endHangEdit.setChecked(matches.get(updateMatch.get(0)).isEndHang());
+        endFullParkEdit.setChecked(matches.get(updateMatch.get(0)).isFullPark());
+        endPartParkEdit.setChecked(matches.get(updateMatch.get(0)).isEndPartial());
+        matchesIndex = matches.get(updateMatch.get(0)).getMatchNumber() - 1;
         updateMatch.remove(0);
         return view;
     }
@@ -59,7 +58,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
             if (!teamNumEdit.getText().toString().equals("")) {
                 if (!depotEdit.getText().toString().equals("")) {
                     if (!landerEdit.getText().toString().equals("")) {
-                        matches.set(matchIndex,
+                        matches.set(matchesIndex,
                                 new ScoutingModel(
                                         Integer.parseInt(matchNumEdit.getText().toString()),
                                         Integer.parseInt(teamNumEdit.getText().toString()),

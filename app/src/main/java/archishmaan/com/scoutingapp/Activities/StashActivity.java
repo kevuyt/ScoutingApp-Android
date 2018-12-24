@@ -32,8 +32,8 @@ import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 public class StashActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     LinearLayout linearLayout;
-    static List<ScoutingModel> updateMatch = new ArrayList<>();
-    ScoutingModel buttonMatch;
+    static List<Integer> updateMatch = new ArrayList<>();
+    int buttonIndex;
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -43,7 +43,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
-        for (ScoutingModel match : matches) {
+        for (final ScoutingModel match : matches) {
             Button button = new Button(getContext());
             button.setText ("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
             button.setId(match.getMatchNumber());
@@ -52,8 +52,21 @@ public class StashActivity extends Fragment implements View.OnClickListener {
             button.setHeight(100);
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
-            button.setOnClickListener(this);
-            buttonMatch = match;
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateMatch.add(matches.indexOf(match));
+                    assert getFragmentManager() != null;
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new EditActivity())
+                            .commit();
+                }
+            });
+
+
+
         }
 
         return scrollView;
@@ -61,12 +74,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        updateMatch.add(buttonMatch);
-        assert getFragmentManager() != null;
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new EditActivity())
-                .commit();
+
 
     }
 
