@@ -36,7 +36,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endHangEdit = view.findViewById((R.id.end_hang));
         endPartParkEdit = view.findViewById((R.id.end_partial_park));
         endFullParkEdit = view.findViewById((R.id.end_full_park));
-        update.setOnClickListener(this);
         matchNumEdit.setText(matches.get(updateMatch.get(0)).getMatchNumber());
         teamNumEdit.setText(matches.get(updateMatch.get(0)).getTeamNumber());
         autoDropEdit.setChecked(matches.get(updateMatch.get(0)).isAutoDrop());
@@ -50,6 +49,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endPartParkEdit.setChecked(matches.get(updateMatch.get(0)).isEndPartial());
         matchesIndex = matches.get(updateMatch.get(0)).getMatchNumber() - 1;
         updateMatch.remove(0);
+        update.setOnClickListener(this);
         return view;
     }
     @Override

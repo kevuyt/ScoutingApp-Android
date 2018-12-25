@@ -43,20 +43,20 @@ public class StashActivity extends Fragment implements View.OnClickListener {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
-        for (final ScoutingModel match : matches) {
+        for (int i = 0; i<matches.size(); i++) {
             Button button = new Button(getContext());
-            button.setText ("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber());
-            button.setId(match.getMatchNumber());
+            button.setText ("Match #: " + matches.get(i).getMatchNumber() + ", Team #: " + matches.get(i).getTeamNumber());
+            button.setId(matches.get(i).getMatchNumber());
             button.setTextSize(15);
             button.setWidth(1000);
             button.setHeight(100);
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
-
+            final int j = i;
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateMatch.add(matches.indexOf(match));
+                    updateMatch.add(j);
                     assert getFragmentManager() != null;
                     getFragmentManager()
                             .beginTransaction()
