@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
-import static archishmaan.com.scoutingapp.Activities.StashActivity.updateMatch;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
+
+import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingapp.Activities.StashActivity.updateMatch;
 
 
 public class EditActivity extends Fragment implements View.OnClickListener {
@@ -54,44 +55,44 @@ public class EditActivity extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        if (!matchNumEdit.getText().toString().equals("")) {
-            if (!teamNumEdit.getText().toString().equals("")) {
-                if (!depotEdit.getText().toString().equals("")) {
-                    if (!landerEdit.getText().toString().equals("")) {
-                        matches.set(matchesIndex,
-                                new ScoutingModel(
-                                        Integer.parseInt(matchNumEdit.getText().toString()),
-                                        Integer.parseInt(teamNumEdit.getText().toString()),
-                                        Integer.parseInt(depotEdit.getText().toString()),
-                                        Integer.parseInt(landerEdit.getText().toString()),
-                                        autoDropEdit.isChecked(),
-                                        markerEdit.isChecked(),
-                                        autoParkEdit.isChecked(),
-                                        sampleEdit.isChecked(),
-                                        endHangEdit.isChecked(),
-                                        endPartParkEdit.isChecked(),
-                                        endFullParkEdit.isChecked()
-                                )
+        if (isClear()) {
+            matches.set(matchesIndex,
+                    new ScoutingModel(
+                            Integer.parseInt(matchNumEdit.getText().toString()),
+                            Integer.parseInt(teamNumEdit.getText().toString()),
+                            Integer.parseInt(depotEdit.getText().toString()),
+                            Integer.parseInt(landerEdit.getText().toString()),
+                            autoDropEdit.isChecked(),
+                            markerEdit.isChecked(),
+                            autoParkEdit.isChecked(),
+                            sampleEdit.isChecked(),
+                            endHangEdit.isChecked(),
+                            endPartParkEdit.isChecked(),
+                            endFullParkEdit.isChecked())
                         );
-                        matchNumEdit.setText("");
-                        teamNumEdit.setText("");
-                        autoDropEdit.setChecked(false);
-                        autoParkEdit.setChecked(false);
-                        markerEdit.setChecked(false);
-                        sampleEdit.setChecked(false);
-                        depotEdit.setText("");
-                        landerEdit.setText("");
-                        endHangEdit.setChecked(false);
-                        endFullParkEdit.setChecked(false);
-                        endPartParkEdit.setChecked(false);
-                        assert getFragmentManager() != null;
-                        getFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, new StashActivity())
-                                .commit();
-                    }
-                }
-            }
+            matchNumEdit.setText("");
+            teamNumEdit.setText("");
+            autoDropEdit.setChecked(false);
+            autoParkEdit.setChecked(false);
+            markerEdit.setChecked(false);
+            sampleEdit.setChecked(false);
+            depotEdit.setText("");
+            landerEdit.setText("");
+            endHangEdit.setChecked(false);
+            endFullParkEdit.setChecked(false);
+            endPartParkEdit.setChecked(false);
+            assert getFragmentManager() != null;
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new StashActivity())
+                    .commit();
         }
+
      }
+    public boolean isClear() {
+        return !matchNumEdit.getText().toString().equals("") &&
+                !teamNumEdit.getText().toString().equals("") &&
+                !depotEdit.getText().toString().equals("") &&
+                !landerEdit.getText().toString().equals("");
+    }
 }

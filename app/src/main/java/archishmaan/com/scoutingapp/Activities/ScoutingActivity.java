@@ -55,39 +55,38 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-    if (!matchNum.getText().toString().equals("")) {
-        if (!teamNum.getText().toString().equals("")) {
-            if (!depot.getText().toString().equals("")) {
-                if (!lander.getText().toString().equals("")) {
-                    matches.add(
-                            new ScoutingModel(
-                                    Integer.parseInt(matchNum.getText().toString()),
-                                    Integer.parseInt(teamNum.getText().toString()),
-                                    Integer.parseInt(depot.getText().toString()),
-                                    Integer.parseInt(lander.getText().toString()),
-                                    autoDrop.isChecked(),
-                                    marker.isChecked(),
-                                    autoPark.isChecked(),
-                                    sample.isChecked(),
-                                    endHang.isChecked(),
-                                    endPartPark.isChecked(),
-                                    endFullPark.isChecked()
-                            )
-                    );
-                    matchNum.setText("");
-                    teamNum.setText("");
-                    autoDrop.setChecked(false);
-                    autoPark.setChecked(false);
-                    marker.setChecked(false);
-                    sample.setChecked(false);
-                    depot.setText("");
-                    lander.setText("");
-                    endHang.setChecked(false);
-                    endFullPark.setChecked(false);
-                    endPartPark.setChecked(false);
-                }
-            }
+        if (isClear()) {
+            matches.add(new ScoutingModel(
+                    Integer.parseInt(matchNum.getText().toString()),
+                    Integer.parseInt(teamNum.getText().toString()),
+                    Integer.parseInt(depot.getText().toString()),
+                    Integer.parseInt(lander.getText().toString()),
+                    autoDrop.isChecked(),
+                    marker.isChecked(),
+                    autoPark.isChecked(),
+                    sample.isChecked(),
+                    endHang.isChecked(),
+                    endPartPark.isChecked(),
+                    endFullPark.isChecked())
+            );
+            matchNum.setText("");
+            teamNum.setText("");
+            autoDrop.setChecked(false);
+            autoPark.setChecked(false);
+            marker.setChecked(false);
+            sample.setChecked(false);
+            depot.setText("");
+            lander.setText("");
+            endHang.setChecked(false);
+            endFullPark.setChecked(false);
+            endPartPark.setChecked(false);
         }
     }
+    public boolean isClear() {
+        return !matchNum.getText().toString().equals("") &&
+                !teamNum.getText().toString().equals("") &&
+                !depot.getText().toString().equals("") &&
+                !lander.getText().toString().equals("");
     }
+
 }
