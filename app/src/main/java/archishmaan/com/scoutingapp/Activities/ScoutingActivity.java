@@ -38,24 +38,13 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
         Button stash = view.findViewById(R.id.stash);
-        matchNum = view.findViewById(R.id.match_number);
-        teamNum = view.findViewById(R.id.team_number);
-        autoDrop = view.findViewById((R.id.auto_drop));
-        marker = view.findViewById((R.id.auto_marker));
-        autoPark = view.findViewById((R.id.auto_park));
-        sample = view.findViewById((R.id.auto_sample));
-        depot = view.findViewById((R.id.depot_minerals));
-        lander = view.findViewById((R.id.lander_minerals));
-        endHang = view.findViewById((R.id.end_hang));
-        endPartPark = view.findViewById((R.id.end_partial_park));
-        endFullPark = view.findViewById((R.id.end_full_park));
-
+        initView(view);
         stash.setOnClickListener(this);
         return view;
     }
     @Override
     public void onClick(View v) {
-        if (isClear()) {
+        if (!isClear()) {
             matches.add(new ScoutingModel(
                     Integer.parseInt(matchNum.getText().toString()),
                     Integer.parseInt(teamNum.getText().toString()),
@@ -69,24 +58,40 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                     endPartPark.isChecked(),
                     endFullPark.isChecked())
             );
-            matchNum.setText("");
-            teamNum.setText("");
-            autoDrop.setChecked(false);
-            autoPark.setChecked(false);
-            marker.setChecked(false);
-            sample.setChecked(false);
-            depot.setText("");
-            lander.setText("");
-            endHang.setChecked(false);
-            endFullPark.setChecked(false);
-            endPartPark.setChecked(false);
+            clear();
         }
     }
     public boolean isClear() {
-        return !matchNum.getText().toString().equals("") &&
+        return !(!matchNum.getText().toString().equals("") &&
                 !teamNum.getText().toString().equals("") &&
                 !depot.getText().toString().equals("") &&
-                !lander.getText().toString().equals("");
+                !lander.getText().toString().equals(""));
+    }
+    public void clear() {
+        matchNum.setText("");
+        teamNum.setText("");
+        autoDrop.setChecked(false);
+        autoPark.setChecked(false);
+        marker.setChecked(false);
+        sample.setChecked(false);
+        depot.setText("");
+        lander.setText("");
+        endHang.setChecked(false);
+        endFullPark.setChecked(false);
+        endPartPark.setChecked(false);
+    }
+    public void initView(View view){
+        matchNum = view.findViewById(R.id.match_number);
+        teamNum = view.findViewById(R.id.team_number);
+        autoDrop = view.findViewById((R.id.auto_drop));
+        marker = view.findViewById((R.id.auto_marker));
+        autoPark = view.findViewById((R.id.auto_park));
+        sample = view.findViewById((R.id.auto_sample));
+        depot = view.findViewById((R.id.depot_minerals));
+        lander = view.findViewById((R.id.lander_minerals));
+        endHang = view.findViewById((R.id.end_hang));
+        endPartPark = view.findViewById((R.id.end_partial_park));
+        endFullPark = view.findViewById((R.id.end_full_park));
     }
 
 }
