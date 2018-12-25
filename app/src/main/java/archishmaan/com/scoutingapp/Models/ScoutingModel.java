@@ -1,8 +1,8 @@
 package archishmaan.com.scoutingapp.Models;
 
 public class ScoutingModel {
-    int matchNumber, teamNumber, depot, lander;
-    boolean autoDrop, marker, autoPark, sample, endHang, endPartial, fullPark;
+    private int matchNumber, teamNumber, depot, lander;
+    private boolean autoDrop, marker, autoPark, sample, endHang, endPartial, fullPark;
 
     public ScoutingModel(int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
                          boolean autoPark, boolean sample, boolean endHang, boolean endPartial, boolean fullPark) {
@@ -23,9 +23,7 @@ public class ScoutingModel {
         return matchNumber;
     }
 
-    public void setMatchNumber(int matchNumber) {
-        this.matchNumber = matchNumber;
-    }
+    public void setMatchNumber(int matchNumber) { this.matchNumber = matchNumber; }
 
     public int getTeamNumber() {
         return teamNumber;

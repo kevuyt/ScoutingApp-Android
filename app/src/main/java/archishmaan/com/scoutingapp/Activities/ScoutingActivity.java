@@ -1,18 +1,17 @@
 package archishmaan.com.scoutingapp.Activities;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
 
@@ -21,24 +20,23 @@ import archishmaan.com.scoutingapp.R;
  * Project: ScoutingApp
  */
 public class ScoutingActivity extends Fragment implements View.OnClickListener {
-    private EditText matchNum;
-    private EditText teamNum;
-    private CheckBox autoDrop;
-    private CheckBox marker;
-    private CheckBox autoPark;
-    private CheckBox sample;
-    private EditText depot;
-    private EditText lander;
-    private CheckBox endHang;
-    private CheckBox endPartPark;
-    private CheckBox endFullPark;
-    private View view;
-    static List<ScoutingModel> matches;
+    public EditText matchNum;
+    public EditText teamNum;
+    public CheckBox autoDrop;
+    public CheckBox marker;
+    public CheckBox autoPark;
+    public CheckBox sample;
+    public EditText depot;
+    public EditText lander;
+    public CheckBox endHang;
+    public CheckBox endPartPark;
+    public CheckBox endFullPark;
+    static List<ScoutingModel> matches = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.scouting_activity, container, false);
+        View view = inflater.inflate(R.layout.scouting_activity, container, false);
         Button stash = view.findViewById(R.id.stash);
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
@@ -55,23 +53,41 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         stash.setOnClickListener(this);
         return view;
     }
-
-    public static List<ScoutingModel> getMatches () {return matches;}
-
     @Override
-    public void onClick(View view) {
-        matches.add(new ScoutingModel(
-                Integer.parseInt(matchNum.getText().toString()),
-                Integer.parseInt(teamNum.getText().toString()),
-                Integer.parseInt(depot.getText().toString()),
-                Integer.parseInt(lander.getText().toString()),
-                Boolean.parseBoolean(autoDrop.getText().toString()),
-                Boolean.parseBoolean(marker.getText().toString()),
-                Boolean.parseBoolean(autoPark.getText().toString()),
-                Boolean.parseBoolean(sample.getText().toString()),
-                Boolean.parseBoolean(endHang.getText().toString()),
-                Boolean.parseBoolean(endPartPark.getText().toString()),
-                Boolean.parseBoolean(endFullPark.getText().toString())));
-
+    public void onClick(View v) {
+    if (!matchNum.getText().toString().equals("")) {
+        if (!teamNum.getText().toString().equals("")) {
+            if (!depot.getText().toString().equals("")) {
+                if (!lander.getText().toString().equals("")) {
+                    matches.add(
+                            new ScoutingModel(
+                                    Integer.parseInt(matchNum.getText().toString()),
+                                    Integer.parseInt(teamNum.getText().toString()),
+                                    Integer.parseInt(depot.getText().toString()),
+                                    Integer.parseInt(lander.getText().toString()),
+                                    autoDrop.isChecked(),
+                                    marker.isChecked(),
+                                    autoPark.isChecked(),
+                                    sample.isChecked(),
+                                    endHang.isChecked(),
+                                    endPartPark.isChecked(),
+                                    endFullPark.isChecked()
+                            )
+                    );
+                    matchNum.setText("");
+                    teamNum.setText("");
+                    autoDrop.setChecked(false);
+                    autoPark.setChecked(false);
+                    marker.setChecked(false);
+                    sample.setChecked(false);
+                    depot.setText("");
+                    lander.setText("");
+                    endHang.setChecked(false);
+                    endFullPark.setChecked(false);
+                    endPartPark.setChecked(false);
+                }
+            }
+        }
+    }
     }
 }

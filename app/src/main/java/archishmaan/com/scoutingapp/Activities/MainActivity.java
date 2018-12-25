@@ -1,13 +1,11 @@
 package archishmaan.com.scoutingapp.Activities;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-
 import archishmaan.com.scoutingapp.R;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
@@ -37,6 +35,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 fragment = new ScoutingActivity();
                 break;
 
+            case R.id.stash:
+                fragment = new StashActivity();
+
+                break;
+
+            case R.id.export:
+                fragment = new ExportActivity();
+
+                break;
+
             default:
                 break;
         }
@@ -44,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return loadFragment(fragment);
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    public boolean loadFragment(Fragment fragment) {
         //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
@@ -53,6 +61,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .commit();
             return true;
         }
-        return false;
+            return false;
     }
 }
