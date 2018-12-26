@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
-import static archishmaan.com.scoutingapp.Activities.StashActivity.updateMatch;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
+
+import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingapp.Activities.StashActivity.updateMatch;
 
 
 public class EditActivity extends Fragment implements View.OnClickListener {
@@ -24,6 +25,45 @@ public class EditActivity extends Fragment implements View.OnClickListener {
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
      public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
+        initView(view);
+        matchesIndex = matches.get(updateMatch.get(0)).getMatchNumber() - 1;
+        updateMatch.remove(0);
+        update.setOnClickListener(this);
+        return view;
+    }
+    @Override
+    public void onClick(View v) {
+        if (!isClear()) {
+            matches.set(matchesIndex,
+                    new ScoutingModel(
+                            Integer.parseInt(matchNumEdit.getText().toString()),
+                            Integer.parseInt(teamNumEdit.getText().toString()),
+                            Integer.parseInt(depotEdit.getText().toString()),
+                            Integer.parseInt(landerEdit.getText().toString()),
+                            autoDropEdit.isChecked(),
+                            markerEdit.isChecked(),
+                            autoParkEdit.isChecked(),
+                            sampleEdit.isChecked(),
+                            endHangEdit.isChecked(),
+                            endPartParkEdit.isChecked(),
+                            endFullParkEdit.isChecked())
+                        );
+            clear();
+            assert getFragmentManager() != null;
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new StashActivity())
+                    .commit();
+        }
+
+     }
+    public boolean isClear() {
+        return !(!matchNumEdit.getText().toString().equals("") &&
+                !teamNumEdit.getText().toString().equals("") &&
+                !depotEdit.getText().toString().equals("") &&
+                !landerEdit.getText().toString().equals(""));
+    }
+    public void initView(View view) {
         update = view.findViewById((R.id.update));
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
@@ -47,51 +87,18 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endHangEdit.setChecked(matches.get(updateMatch.get(0)).isEndHang());
         endFullParkEdit.setChecked(matches.get(updateMatch.get(0)).isFullPark());
         endPartParkEdit.setChecked(matches.get(updateMatch.get(0)).isEndPartial());
-        matchesIndex = matches.get(updateMatch.get(0)).getMatchNumber() - 1;
-        updateMatch.remove(0);
-        update.setOnClickListener(this);
-        return view;
     }
-    @Override
-    public void onClick(View v) {
-        if (!matchNumEdit.getText().toString().equals("")) {
-            if (!teamNumEdit.getText().toString().equals("")) {
-                if (!depotEdit.getText().toString().equals("")) {
-                    if (!landerEdit.getText().toString().equals("")) {
-                        matches.set(matchesIndex,
-                                new ScoutingModel(
-                                        Integer.parseInt(matchNumEdit.getText().toString()),
-                                        Integer.parseInt(teamNumEdit.getText().toString()),
-                                        Integer.parseInt(depotEdit.getText().toString()),
-                                        Integer.parseInt(landerEdit.getText().toString()),
-                                        autoDropEdit.isChecked(),
-                                        markerEdit.isChecked(),
-                                        autoParkEdit.isChecked(),
-                                        sampleEdit.isChecked(),
-                                        endHangEdit.isChecked(),
-                                        endPartParkEdit.isChecked(),
-                                        endFullParkEdit.isChecked()
-                                )
-                        );
-                        matchNumEdit.setText("");
-                        teamNumEdit.setText("");
-                        autoDropEdit.setChecked(false);
-                        autoParkEdit.setChecked(false);
-                        markerEdit.setChecked(false);
-                        sampleEdit.setChecked(false);
-                        depotEdit.setText("");
-                        landerEdit.setText("");
-                        endHangEdit.setChecked(false);
-                        endFullParkEdit.setChecked(false);
-                        endPartParkEdit.setChecked(false);
-                        assert getFragmentManager() != null;
-                        getFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container, new StashActivity())
-                                .commit();
-                    }
-                }
-            }
-        }
-     }
+    public void clear() {
+        matchNumEdit.setText("");
+        teamNumEdit.setText("");
+        autoDropEdit.setChecked(false);
+        autoParkEdit.setChecked(false);
+        markerEdit.setChecked(false);
+        sampleEdit.setChecked(false);
+        depotEdit.setText("");
+        landerEdit.setText("");
+        endHangEdit.setChecked(false);
+        endFullParkEdit.setChecked(false);
+        endPartParkEdit.setChecked(false);
+    }
 }
