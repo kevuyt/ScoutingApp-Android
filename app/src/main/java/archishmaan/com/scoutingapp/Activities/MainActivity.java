@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.scout:
                 fragment = new ScoutingActivity();
+
                 break;
 
             case R.id.stash:
