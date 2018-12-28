@@ -35,13 +35,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 break;
 
-            case R.id.stash:
-                fragment = new StashActivity();
+            case R.id.data:
+                fragment = new DataActivity();
 
                 break;
 
-            case R.id.export:
-                fragment = new ExportActivity();
+            case R.id.analyze:
+                fragment = new AnalyzeActivity();
 
                 break;
 

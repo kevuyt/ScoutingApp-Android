@@ -15,7 +15,7 @@ import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
 
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
-import static archishmaan.com.scoutingapp.Activities.StashActivity.updateMatch;
+import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
 
 
 public class EditActivity extends Fragment implements View.OnClickListener {
@@ -52,7 +52,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
             assert getFragmentManager() != null;
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new StashActivity())
+                    .replace(R.id.fragment_container, new EditActivity())
                     .commit();
         }
 
