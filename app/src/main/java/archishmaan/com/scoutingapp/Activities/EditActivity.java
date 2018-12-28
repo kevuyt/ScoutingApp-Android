@@ -23,10 +23,10 @@ public class EditActivity extends Fragment implements View.OnClickListener {
     int matchesIndex;
     EditText matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
-     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         initView(view);
-        matchesIndex = matches.get(updateMatch.get(0)).getMatchNumber() - 1;
+        matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
         updateMatch.remove(0);
         update.setOnClickListener(this);
         return view;
@@ -63,7 +63,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                 !depotEdit.getText().toString().equals("") &&
                 !landerEdit.getText().toString().equals(""));
     }
-    public void initView(View view) {
+    public  void initView(View view) {
         update = view.findViewById((R.id.update));
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
@@ -76,17 +76,18 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endHangEdit = view.findViewById((R.id.end_hang));
         endPartParkEdit = view.findViewById((R.id.end_partial_park));
         endFullParkEdit = view.findViewById((R.id.end_full_park));
-        matchNumEdit.setText(matches.get(updateMatch.get(0)).getMatchNumber());
-        teamNumEdit.setText(matches.get(updateMatch.get(0)).getTeamNumber());
-        autoDropEdit.setChecked(matches.get(updateMatch.get(0)).isAutoDrop());
-        autoParkEdit.setChecked(matches.get(updateMatch.get(0)).isAutoPark());
-        markerEdit.setChecked(matches.get(updateMatch.get(0)).isMarker());
-        sampleEdit.setChecked(matches.get(updateMatch.get(0)).isSample());
-        depotEdit.setText(matches.get(updateMatch.get(0)).getDepot());
-        landerEdit.setText(matches.get(updateMatch.get(0)).getLander());
-        endHangEdit.setChecked(matches.get(updateMatch.get(0)).isEndHang());
-        endFullParkEdit.setChecked(matches.get(updateMatch.get(0)).isFullPark());
-        endPartParkEdit.setChecked(matches.get(updateMatch.get(0)).isEndPartial());
+        clear();
+        matchNumEdit.setText(String.valueOf(updateMatch.get(0).getMatchNumber()));
+        teamNumEdit.setText(String.valueOf(updateMatch.get(0).getTeamNumber()));
+        autoDropEdit.setChecked(updateMatch.get(0).isAutoDrop());
+        autoParkEdit.setChecked(updateMatch.get(0).isAutoPark());
+        markerEdit.setChecked(updateMatch.get(0).isMarker());
+        sampleEdit.setChecked(updateMatch.get(0).isSample());
+        depotEdit.setText(String.valueOf(updateMatch.get(0).getDepot()));
+        landerEdit.setText(String.valueOf(updateMatch.get(0).getLander()));
+        endHangEdit.setChecked(updateMatch.get(0).isEndHang());
+        endFullParkEdit.setChecked(updateMatch.get(0).isFullPark());
+        endPartParkEdit.setChecked(updateMatch.get(0).isEndPartial());
     }
     public void clear() {
         matchNumEdit.setText("");

@@ -32,7 +32,7 @@ import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 public class StashActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     LinearLayout linearLayout;
-    static List<Integer> updateMatch = new ArrayList<>();
+    static List<ScoutingModel> updateMatch = new ArrayList<>();
     int buttonIndex;
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -43,7 +43,7 @@ public class StashActivity extends Fragment implements View.OnClickListener {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
-        for (int i = 0; i<matches.size(); i++) {
+        for (int i = 0; i< matches.size(); i++) {
             Button button = new Button(getContext());
             button.setText ("Match #: " + matches.get(i).getMatchNumber() + ", Team #: " + matches.get(i).getTeamNumber());
             button.setId(matches.get(i).getMatchNumber());
@@ -52,11 +52,11 @@ public class StashActivity extends Fragment implements View.OnClickListener {
             button.setHeight(100);
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
-            final int j = i;
+            final ScoutingModel updateMatchEntry = matches.get(i);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateMatch.add(j);
+                    updateMatch.add(updateMatchEntry);
                     assert getFragmentManager() != null;
                     getFragmentManager()
                             .beginTransaction()
