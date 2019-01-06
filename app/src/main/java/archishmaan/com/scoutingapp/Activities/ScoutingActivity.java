@@ -26,6 +26,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     public CheckBox marker;
     public CheckBox autoPark;
     public CheckBox sample;
+    public CheckBox doubleSample;
     public EditText depot;
     public EditText lander;
     public CheckBox endHang;
@@ -54,6 +55,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                     marker.isChecked(),
                     autoPark.isChecked(),
                     sample.isChecked(),
+                    doubleSample.isChecked(),
                     endHang.isChecked(),
                     endPartPark.isChecked(),
                     endFullPark.isChecked())
@@ -68,12 +70,13 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                 !lander.getText().toString().equals(""));
     }
     public void clear() {
-        matchNum.setText("");
+        matchNum.setText(String.valueOf(Integer.parseInt(matchNum.getText().toString()) + 1));
         teamNum.setText("");
         autoDrop.setChecked(false);
         autoPark.setChecked(false);
         marker.setChecked(false);
         sample.setChecked(false);
+        doubleSample.setChecked(false);
         depot.setText("");
         lander.setText("");
         endHang.setChecked(false);
@@ -83,15 +86,17 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     public void initView(View view){
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
-        autoDrop = view.findViewById((R.id.auto_drop));
-        marker = view.findViewById((R.id.auto_marker));
-        autoPark = view.findViewById((R.id.auto_park));
-        sample = view.findViewById((R.id.auto_sample));
-        depot = view.findViewById((R.id.depot_minerals));
-        lander = view.findViewById((R.id.lander_minerals));
-        endHang = view.findViewById((R.id.end_hang));
-        endPartPark = view.findViewById((R.id.end_partial_park));
-        endFullPark = view.findViewById((R.id.end_full_park));
+        autoDrop = view.findViewById(R.id.auto_drop);
+        marker = view.findViewById(R.id.auto_marker);
+        autoPark = view.findViewById(R.id.auto_park);
+        sample = view.findViewById(R.id.auto_sample);
+        doubleSample = view.findViewById(R.id.auto_double_sample);
+        depot = view.findViewById(R.id.depot_minerals);
+        lander = view.findViewById(R.id.lander_minerals);
+        endHang = view.findViewById(R.id.end_hang);
+        endPartPark = view.findViewById(R.id.end_partial_park);
+        endFullPark = view.findViewById(R.id.end_full_park);
+        matchNum.setText(String.valueOf(matches.size() + 1));
     }
 
 }

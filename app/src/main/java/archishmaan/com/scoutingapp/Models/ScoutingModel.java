@@ -2,10 +2,10 @@ package archishmaan.com.scoutingapp.Models;
 
 public class ScoutingModel {
     private int matchNumber, teamNumber, depot, lander;
-    private boolean autoDrop, marker, autoPark, sample, endHang, endPartial, fullPark;
+    private boolean autoDrop, marker, autoPark, sample, doubleSample, endHang, endPartial, fullPark;
 
     public ScoutingModel(int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
-                         boolean autoPark, boolean sample, boolean endHang, boolean endPartial, boolean fullPark) {
+                         boolean autoPark, boolean sample, boolean doubleSample, boolean endHang, boolean endPartial, boolean fullPark) {
         this.matchNumber = matchNumber;
         this.teamNumber = teamNumber;
         this.depot = depot;
@@ -14,6 +14,7 @@ public class ScoutingModel {
         this.marker = marker;
         this.autoPark = autoPark;
         this.sample = sample;
+        this.doubleSample =  doubleSample;
         this.endHang = endHang;
         this.endPartial = endPartial;
         this.fullPark = fullPark;
@@ -81,9 +82,11 @@ public class ScoutingModel {
         this.sample = sample;
     }
 
-    public boolean isEndHang() {
-        return endHang;
-    }
+    public boolean isDoubleSample() {return doubleSample;}
+
+    public void setDoubleSample(boolean doubleSample) {this.doubleSample = doubleSample;}
+
+    public boolean isEndHang() {return endHang;}
 
     public void setEndHang(boolean endHang) {
         this.endHang = endHang;

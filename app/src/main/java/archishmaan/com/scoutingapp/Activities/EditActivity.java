@@ -22,7 +22,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
     Button update;
     int matchesIndex;
     EditText matchNumEdit, teamNumEdit, depotEdit, landerEdit;
-    CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
+    CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, doubleSampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         initView(view);
@@ -44,6 +44,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                             markerEdit.isChecked(),
                             autoParkEdit.isChecked(),
                             sampleEdit.isChecked(),
+                            doubleSampleEdit.isChecked(),
                             endHangEdit.isChecked(),
                             endPartParkEdit.isChecked(),
                             endFullParkEdit.isChecked())
@@ -52,7 +53,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
             assert getFragmentManager() != null;
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new EditActivity())
+                    .replace(R.id.fragment_container, new DataActivity())
                     .commit();
         }
 
@@ -67,15 +68,16 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         update = view.findViewById((R.id.update));
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
-        autoDropEdit = view.findViewById((R.id.auto_drop));
-        markerEdit = view.findViewById((R.id.auto_marker));
-        autoParkEdit = view.findViewById((R.id.auto_park));
-        sampleEdit = view.findViewById((R.id.auto_sample));
-        depotEdit = view.findViewById((R.id.depot_minerals));
-        landerEdit = view.findViewById((R.id.lander_minerals));
-        endHangEdit = view.findViewById((R.id.end_hang));
-        endPartParkEdit = view.findViewById((R.id.end_partial_park));
-        endFullParkEdit = view.findViewById((R.id.end_full_park));
+        autoDropEdit = view.findViewById(R.id.auto_drop);
+        markerEdit = view.findViewById(R.id.auto_marker);
+        autoParkEdit = view.findViewById(R.id.auto_park);
+        sampleEdit = view.findViewById(R.id.auto_sample);
+        doubleSampleEdit = view.findViewById(R.id.auto_double_sample);
+        depotEdit = view.findViewById(R.id.depot_minerals);
+        landerEdit = view.findViewById(R.id.lander_minerals);
+        endHangEdit = view.findViewById(R.id.end_hang);
+        endPartParkEdit = view.findViewById(R.id.end_partial_park);
+        endFullParkEdit = view.findViewById(R.id.end_full_park);
         clear();
         matchNumEdit.setText(String.valueOf(updateMatch.get(0).getMatchNumber()));
         teamNumEdit.setText(String.valueOf(updateMatch.get(0).getTeamNumber()));
@@ -83,6 +85,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         autoParkEdit.setChecked(updateMatch.get(0).isAutoPark());
         markerEdit.setChecked(updateMatch.get(0).isMarker());
         sampleEdit.setChecked(updateMatch.get(0).isSample());
+        doubleSampleEdit.setChecked(updateMatch.get(0).isDoubleSample());
         depotEdit.setText(String.valueOf(updateMatch.get(0).getDepot()));
         landerEdit.setText(String.valueOf(updateMatch.get(0).getLander()));
         endHangEdit.setChecked(updateMatch.get(0).isEndHang());
@@ -96,6 +99,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         autoParkEdit.setChecked(false);
         markerEdit.setChecked(false);
         sampleEdit.setChecked(false);
+        doubleSampleEdit.setChecked(false);
         depotEdit.setText("");
         landerEdit.setText("");
         endHangEdit.setChecked(false);

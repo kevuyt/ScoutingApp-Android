@@ -27,21 +27,32 @@ import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
  */
 public class DataActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
+    int score;
     LinearLayout linearLayout;
     static List<ScoutingModel> updateMatch = new ArrayList<>();
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.data_activity, container, false);
         scrollView = new ScrollView(getContext());
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
 
         for (int i = 0; i< matches.size(); i++) {
+            score = 0;
             Button button = new Button(getContext());
-            button.setText ("Match #: " + matches.get(i).getMatchNumber() + ", Team #: " + matches.get(i).getTeamNumber());
+            if (matches.get(i).isAutoDrop()) {score +=30;}
+            if (matches.get(i).isSample()) {score+=25;}
+            if (matches.get(i).isDoubleSample()) {score+=50;}
+            if (matches.get(i).isMarker()) {score+=15;}
+            if (matches.get(i).isAutoPark()) {score+=10;}
+            if (matches.get(i).getDepot()>0) {score+=matches.get(i).getDepot()*2;}
+            if (matches.get(i).getLander()>0) {score+=matches.get(i).getLander()*5;}
+            if (matches.get(i).isEndHang()) {score+=50;}
+            if (matches.get(i).isEndPartial()) {score+=15;}
+            if (matches.get(i).isFullPark()) {score+=25;}
+            button.setText ("Match #: " + matches.get(i).getMatchNumber() + ", Team #: " + matches.get(i).getTeamNumber() + ", Score: " + score++);
             button.setId(matches.get(i).getMatchNumber());
             button.setTextSize(15);
             button.setWidth(1000);
@@ -61,7 +72,32 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                 }
             });
         }
-        return view;
+        Button export = new Button(getContext());
+        export.setText("Export");
+        export.setTextSize(25);
+        export.setWidth(1000);
+        export.setHeight(125);
+        export.getBackground().setColorFilter(Color.parseColor("#DAA620"), PorterDuff.Mode.DARKEN);
+        linearLayout.addView(export);
+        export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*String csvName = "ScoutingData.csv";
+                File csvFile = new File(csvName);
+                PrintWriter csvWriter = null;
+                try {
+                    csvWriter = new PrintWriter(new FileWriter(csvFile));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                    for(ScoutingModel match : matches){
+                        assert csvWriter != null;
+                        csvWriter.println(match);
+                    }*/
+            }
+        });
+
+        return scrollView;
     }
 
     @Override
