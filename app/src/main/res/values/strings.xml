@@ -12,7 +12,7 @@
     <string name="auto">Auto:</string>
     <string name="auto_drop">Drop</string>
     <string name="marker">Marker</string>
-    <string name="auto_parked">Partial Parked</string>
+    <string name="auto_parked">Auto Park</string>
     <string name="sample">Sample</string>
     <string name="teleop">Teleop:</string>
     <string name="depot_minerals">Depot Minerals</string>
@@ -22,4 +22,5 @@
     <string name="end_partial_park">Partial Park</string>
     <string name="end_full_park">Full Park</string>
     <string name="double_sample">Double Sample</string>
-    </resources>
+    <string name="tournament_name">Tournament Name</string>
+</resources>

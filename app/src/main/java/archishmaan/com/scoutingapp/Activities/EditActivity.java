@@ -21,21 +21,21 @@ import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
 public class EditActivity extends Fragment implements View.OnClickListener {
     Button update;
     int matchesIndex;
-    EditText matchNumEdit, teamNumEdit, depotEdit, landerEdit;
+    EditText tournamentEdit, matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, doubleSampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         initView(view);
         matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
-        updateMatch.remove(0);
         update.setOnClickListener(this);
         return view;
     }
     @Override
     public void onClick(View v) {
         if (!isClear()) {
-            matches.set(matchesIndex,
+            matches.set(matches.indexOf(updateMatch.get(0)),
                     new ScoutingModel(
+                            tournamentEdit.getText().toString(),
                             Integer.parseInt(matchNumEdit.getText().toString()),
                             Integer.parseInt(teamNumEdit.getText().toString()),
                             Integer.parseInt(depotEdit.getText().toString()),
@@ -59,13 +59,15 @@ public class EditActivity extends Fragment implements View.OnClickListener {
 
      }
     public boolean isClear() {
-        return !(!matchNumEdit.getText().toString().equals("") &&
-                !teamNumEdit.getText().toString().equals("") &&
-                !depotEdit.getText().toString().equals("") &&
-                !landerEdit.getText().toString().equals(""));
+        return (tournamentEdit.getText().toString().equals("")  ||
+                matchNumEdit.getText().toString().equals("") ||
+                teamNumEdit.getText().toString().equals("") ||
+                depotEdit.getText().toString().equals("") ||
+                landerEdit.getText().toString().equals(""));
     }
     public  void initView(View view) {
         update = view.findViewById((R.id.update));
+        tournamentEdit = view.findViewById(R.id.tournament);
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
         autoDropEdit = view.findViewById(R.id.auto_drop);
@@ -79,6 +81,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endPartParkEdit = view.findViewById(R.id.end_partial_park);
         endFullParkEdit = view.findViewById(R.id.end_full_park);
         clear();
+        tournamentEdit.setText(String.valueOf(updateMatch.get(0).getTournament()));
         matchNumEdit.setText(String.valueOf(updateMatch.get(0).getMatchNumber()));
         teamNumEdit.setText(String.valueOf(updateMatch.get(0).getTeamNumber()));
         autoDropEdit.setChecked(updateMatch.get(0).isAutoDrop());

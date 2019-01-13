@@ -3,9 +3,11 @@ package archishmaan.com.scoutingapp.Models;
 public class ScoutingModel {
     private int matchNumber, teamNumber, depot, lander;
     private boolean autoDrop, marker, autoPark, sample, doubleSample, endHang, endPartial, fullPark;
+    private String tournament;
 
-    public ScoutingModel(int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
+    public ScoutingModel(String tournament, int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
                          boolean autoPark, boolean sample, boolean doubleSample, boolean endHang, boolean endPartial, boolean fullPark) {
+        this.tournament = tournament;
         this.matchNumber = matchNumber;
         this.teamNumber = teamNumber;
         this.depot = depot;
@@ -20,9 +22,12 @@ public class ScoutingModel {
         this.fullPark = fullPark;
     }
 
-    public int getMatchNumber() {
-        return matchNumber;
-    }
+
+    public String getTournament() {return tournament;}
+
+    public void setTournament(String tournament) {this.tournament = tournament;}
+
+    public int getMatchNumber() {return matchNumber;}
 
     public void setMatchNumber(int matchNumber) { this.matchNumber = matchNumber; }
 

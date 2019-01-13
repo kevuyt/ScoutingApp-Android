@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import archishmaan.com.scoutingapp.R;
+import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -31,16 +32,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.scout:
+                while (updateMatch.size() != 0) {
+                    updateMatch.remove(0);
+                }
                 fragment = new ScoutingActivity();
 
                 break;
 
             case R.id.data:
+                while (updateMatch.size() != 0) {
+                    updateMatch.remove(0);
+                }
                 fragment = new DataActivity();
 
                 break;
 
             case R.id.analyze:
+                while (updateMatch.size() != 0) {
+                    updateMatch.remove(0);
+                }
                 fragment = new AnalyzeActivity();
 
                 break;
