@@ -9,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.R;
-
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.

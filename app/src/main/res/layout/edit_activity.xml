@@ -11,21 +11,32 @@
 
 
 
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="1000dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/delete"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/delete"
+                android:textColor="@color/colorBlack"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/details"
@@ -33,17 +44,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                />
 
             <EditText
                 android:id="@+id/tournament"
-                android:layout_width="218sp"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:ems="6"
-                android:textSize="25sp"
                 android:hint="@string/tournament_name"
                 android:inputType="text"
                 android:maxLines="1"
+                android:textSize="25sp"
                 />
 
             <EditText
@@ -106,9 +118,8 @@
                 android:id="@+id/auto_double_sample"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
                 android:text="@string/double_sample"
-                />
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/tele_op_label"
@@ -186,8 +197,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="375sp"
-                android:text=""/>
+                android:text=""
+                android:textSize="375sp" />
 
         </LinearLayout>
     </ScrollView>

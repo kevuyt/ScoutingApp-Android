@@ -1,6 +1,6 @@
 package archishmaan.com.scoutingapp.Activities;
 
-import android.support.design.widget.Snackbar;
+import android.arch.persistence.room.Room;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,22 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import archishmaan.com.scoutingapp.Listeners.UndoListener;
+import archishmaan.com.scoutingapp.LocalDB.ScoutingModelDatabase;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
+import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
+
+import static archishmaan.com.scoutingapp.Activities.MainActivity.scoutingModelDatabase;
 import static archishmaan.com.scoutingapp.SQL.SqlApi.createRow;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
  * Project: ScoutingApp
  */
-public class ScoutingActivity extends Fragment implements View.OnClickListener {
+
+public class ScoutingActivity extends Fragment implements View.OnClickListener{
     //Snackbar stashMessage;
     public EditText tournament;
     public EditText matchNum;
@@ -42,6 +45,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
     public CheckBox endPartPark;
     public CheckBox endFullPark;
     public static List<ScoutingModel> matches = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -73,19 +77,43 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
                     endPartPark.isChecked(),
                     endFullPark.isChecked())
             );
-            createRow(new ScoutingModel(tournament.getText().toString(),
-                    Integer.parseInt(matchNum.getText().toString()),
-                    Integer.parseInt(teamNum.getText().toString()),
-                    Integer.parseInt(depot.getText().toString()),
-                    Integer.parseInt(lander.getText().toString()),
-                    autoDrop.isChecked(),
-                    marker.isChecked(),
-                    autoPark.isChecked(),
-                    sample.isChecked(),
-                    doubleSample.isChecked(),
-                    endHang.isChecked(),
-                    endPartPark.isChecked(),
-                    endFullPark.isChecked()));
+            int teamNumInt = Integer.parseInt(teamNum.getText().toString());
+            int depotInt = Integer.parseInt(depot.getText().toString());
+            int landerInt = Integer.parseInt(lander.getText().toString());
+            new Thread(() -> {
+              ScoutingModelDB scoutingModelDB = new ScoutingModelDB(
+                      tournament.getText().toString(),
+                      Integer.parseInt(matchNum.getText().toString()),
+                      teamNumInt,
+                      depotInt,
+                      landerInt,
+                      autoDrop.isChecked(),
+                      marker.isChecked(),
+                      autoPark.isChecked(),
+                      sample.isChecked(),
+                      doubleSample.isChecked(),
+                      endHang.isChecked(),
+                      endPartPark.isChecked(),
+                      endFullPark.isChecked());
+              scoutingModelDatabase.daoAccess().insertOnlySingleScoutingModelDB(scoutingModelDB);
+            }).start();
+            createRow(
+                    new ScoutingModel(
+                            tournament.getText().toString(),
+                            Integer.parseInt(matchNum.getText().toString()),
+                            Integer.parseInt(teamNum.getText().toString()),
+                            Integer.parseInt(depot.getText().toString()),
+                            Integer.parseInt(lander.getText().toString()),
+                            autoDrop.isChecked(),
+                            marker.isChecked(),
+                            autoPark.isChecked(),
+                            sample.isChecked(),
+                            doubleSample.isChecked(),
+                            endHang.isChecked(),
+                            endPartPark.isChecked(),
+                            endFullPark.isChecked()
+                    )
+            );
             //stashMessage.setAction("Undo", new UndoListener());
             //stashMessage.show();
 
@@ -131,6 +159,8 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener {
         if (matches.size() > 0) {
         tournament.setText(matches.get(matches.size()-1).getTournament());
         }
+
+
     }
 
 }

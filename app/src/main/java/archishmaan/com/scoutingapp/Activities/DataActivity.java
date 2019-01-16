@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -22,13 +21,15 @@ import android.widget.ScrollView;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.file.spi.FileTypeDetector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import archishmaan.com.scoutingapp.LocalDB.DaoAccess;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
+import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
+
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 
 /**
@@ -39,10 +40,11 @@ import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 public class DataActivity extends Fragment implements View.OnClickListener {
     ScrollView scrollView;
     int score;
+    int drop, marker, sample, autoPark, hang, partPark, fullPark;
+    //int f= 1;
     int requestValue = 0;
     LinearLayout linearLayout;
     static List<ScoutingModel> updateMatch = new ArrayList<>();
-    static List<String> filePath = new ArrayList<>();
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
@@ -73,16 +75,13 @@ public class DataActivity extends Fragment implements View.OnClickListener {
             button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
             linearLayout.addView(button);
             final ScoutingModel updateMatchEntry = match;
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updateMatch.add(updateMatchEntry);
-                    assert getFragmentManager() != null;
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, new EditActivity())
-                            .commit();
-                }
+            button.setOnClickListener(v -> {
+                updateMatch.add(updateMatchEntry);
+                assert getFragmentManager() != null;
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EditActivity())
+                        .commit();
             });
         }
         Button export = new Button(getContext());
@@ -92,49 +91,62 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         export.setHeight(125);
         export.getBackground().setColorFilter(Color.parseColor("#DAA620"), PorterDuff.Mode.DARKEN);
         linearLayout.addView(export);
-        export.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String filename = "Scouting Data " + matches.get(0).getTournament() + ".csv";
+        export.setOnClickListener(v -> {
+            try {
+                String filename = "Scouting Data " + matches.get(0).getTournament() + ".csv";
 
-                    File directoryDocument = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-                    File file = new File(directoryDocument, filename);
-                    file.setReadable(true);
-                    file.setExecutable(true);
-                    file.setWritable(true);
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestValue);
-                    }
-                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, requestValue + 1);
-                    }
-                        FileOutputStream outputStream = new FileOutputStream(file);
-                        outputStream.write(("Tournament Name, Match Number, Team Number, Auto Drop, Sample, Double Sample, Marker, Auto Park, Depot, Lander, End Hang, End Partial Park, End Full Park" + System.lineSeparator()).getBytes());
-                        for (ScoutingModel match : matches) {
-                        outputStream.write((match.getTournament() +", ").getBytes());
-                        outputStream.write((match.getMatchNumber()+", ").getBytes());
-                        outputStream.write((match.getTeamNumber()+", ").getBytes());
-                        outputStream.write((match.isAutoDrop()+", ").getBytes());
-                        outputStream.write((match.isSample()+", ").getBytes());
-                        outputStream.write((match.isDoubleSample()+", ").getBytes());
-                        outputStream.write((match.isMarker()+", ").getBytes());
-                        outputStream.write((match.isAutoPark()+", ").getBytes());
-                        outputStream.write((match.getDepot()+", ").getBytes());
-                        outputStream.write((match.getLander()+", ").getBytes());
-                        outputStream.write((match.isEndHang()+", ").getBytes());
-                        outputStream.write((match.isEndPartial()+", ").getBytes());
-                        outputStream.write((match.isFullPark()+ System.lineSeparator()).getBytes());
-                        }
-                        String path = file.getAbsolutePath();
-                        filePath.add(path);
-                        outputStream.close();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                File directoryDocument = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+                File file = new File(directoryDocument, filename);
+                file.setReadable(true);
+                file.setExecutable(true);
+                file.setWritable(true);
+                if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestValue);
+                    requestValue+=1;
                 }
-                requestValue+=2;
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestValue);
+                    requestValue+=1;
+                }
+
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(("Tournament Name, Match Number, Team Number, Auto Drop, Sample, Marker, Auto Park, Depot, Lander, End Hang, End Partial Park, End Full Park" + System.lineSeparator()).getBytes());
+
+                for (ScoutingModel match : matches) {
+
+                    if (match.isAutoDrop()) {drop = 1;}
+                    else {drop = 0;}
+                    if (match.isSample()) {sample = 1;}
+                    else if (match.isDoubleSample()) {sample = 2;}
+                    else {sample = 0;}
+                    if (match.isMarker()) {marker = 1;}
+                    else {marker = 0;}
+                    if (match.isAutoPark()) {autoPark = 1;}
+                    else {autoPark = 0;}
+                    if (match.isEndHang()) {hang = 1;}
+                    else {hang = 0;}
+                    if (match.isEndPartial()) {partPark = 1;}
+                    else {partPark = 0;}
+                    if (match.isFullPark()) {fullPark = 1;}
+                    else {fullPark = 0;}
+                    outputStream.write((match.getTournament() + ", ").getBytes());
+                    outputStream.write((match.getMatchNumber() + ", ").getBytes());
+                    outputStream.write((match.getTeamNumber() + ", ").getBytes());
+                    outputStream.write((String.valueOf(drop) + ", ").getBytes());
+                    outputStream.write((String.valueOf(sample) + ", ").getBytes());
+                    outputStream.write((String.valueOf(marker) + ", ").getBytes());
+                    outputStream.write((String.valueOf(autoPark) + ", ").getBytes());
+                    outputStream.write((match.getDepot() + ", ").getBytes());
+                    outputStream.write((match.getLander() + ", ").getBytes());
+                    outputStream.write((String.valueOf(hang) + ", ").getBytes());
+                    outputStream.write((String.valueOf(partPark) + ", ").getBytes());
+                    outputStream.write((String.valueOf(fullPark) + System.lineSeparator()).getBytes());
+                }
+                outputStream.close();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
