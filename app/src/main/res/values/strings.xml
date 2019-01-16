@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Scouting App</string>
     <string name="title_scout">Scouting</string>
-    <string name="title_stash">Stashed</string>
-    <string name="title_export">Export</string>
+    <string name="title_data">Data</string>
+    <string name="title_analyze">Analyze</string>
     <string name="export">Export</string>
     <string name="stash">STASH</string>
     <string name="update">UPDATE</string>
@@ -12,7 +12,7 @@
     <string name="auto">Auto:</string>
     <string name="auto_drop">Drop</string>
     <string name="marker">Marker</string>
-    <string name="auto_parked">Partial Parked</string>
+    <string name="auto_parked">Auto Park</string>
     <string name="sample">Sample</string>
     <string name="teleop">Teleop:</string>
     <string name="depot_minerals">Depot Minerals</string>
@@ -21,4 +21,7 @@
     <string name="end_hang">Hang</string>
     <string name="end_partial_park">Partial Park</string>
     <string name="end_full_park">Full Park</string>
+    <string name="double_sample">Double Sample</string>
+    <string name="tournament_name">Tournament Name</string>
+    <string name="delete">delete</string>
 </resources>

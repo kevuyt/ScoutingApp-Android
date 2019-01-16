@@ -1,12 +1,19 @@
 package archishmaan.com.scoutingapp.Models;
 
-public class ScoutingModel {
-    private int  matchNumber, teamNumber, depot, lander;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+@Entity
+public class ScoutingModelDB {
+    @PrimaryKey
+    private int matchNumber;
+    private int teamNumber, depot, lander;
     private boolean autoDrop, marker, autoPark, sample, doubleSample, endHang, endPartial, fullPark;
     private String tournament;
 
-    public ScoutingModel(String tournament, int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
-                         boolean autoPark, boolean sample, boolean doubleSample, boolean endHang, boolean endPartial, boolean fullPark) {
+    public ScoutingModelDB(String tournament, int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
+                           boolean autoPark, boolean sample, boolean doubleSample, boolean endHang, boolean endPartial, boolean fullPark) {
         this.tournament = tournament;
         this.matchNumber = matchNumber;
         this.teamNumber = teamNumber;
@@ -101,15 +108,13 @@ public class ScoutingModel {
         return endPartial;
     }
 
-    public void setEndPartial(boolean endPartial) {
-        this.endPartial = endPartial;
-    }
+    public void setEndPartial(boolean endPartial) {this.endPartial = endPartial;}
 
-    public boolean isFullPark() {
-        return fullPark;
-    }
+    public boolean isFullPark() {return fullPark;}
 
     public void setFullPark(boolean fullPark) {
         this.fullPark = fullPark;
     }
+
 }
+

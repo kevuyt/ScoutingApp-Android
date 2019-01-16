@@ -9,21 +9,7 @@
     app:layout_constraintTop_toTopOf="parent"
     tools:context=".Activities.ScoutingActivity">
 
-    <Button
-        android:id="@+id/stash"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="1000dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/stash"
-        android:textColor="@color/colorBlack"
-        android:textSize="29sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -36,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -44,17 +31,28 @@
                 android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/details"
 
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <EditText
+                android:id="@+id/tournament"
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:textSize="25sp"
+                android:hint="@string/tournament_name"
+                android:inputType="text"
+                android:maxLines="1"
+                />
 
             <EditText
                 android:id="@+id/match_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:hint="@string/match_number"
                 android:inputType="number" />
 
@@ -63,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:hint="@string/team_number"
                 android:inputType="number" />
 
@@ -72,43 +70,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/auto"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <CheckBox
                 android:id="@+id/auto_drop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/auto_drop" />
 
             <CheckBox
                 android:id="@+id/auto_marker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/marker" />
 
             <CheckBox
                 android:id="@+id/auto_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/auto_parked" />
 
             <CheckBox
                 android:id="@+id/auto_sample"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/sample"
+                />
+
+            <CheckBox
+                android:id="@+id/auto_double_sample"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="@string/double_sample"
                 />
 
             <TextView
                 android:id="@+id/tele_op_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/teleop"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -117,16 +123,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:hint="@string/depot_minerals"
-                android:inputType="number" />
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/lander_minerals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="7"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:hint="@string/lander_minerals"
                 android:inputType="number" />
 
@@ -134,7 +140,7 @@
                 android:id="@+id/end_game_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/endgame"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -142,24 +148,44 @@
                 android:id="@+id/end_hang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/end_hang" />
 
             <CheckBox
                 android:id="@+id/end_partial_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/end_partial_park" />
 
             <CheckBox
                 android:id="@+id/end_full_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="29sp"
+                android:textSize="25sp"
                 android:text="@string/end_full_park" />
+            <Button
+                android:id="@+id/stash"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/stash"
+                android:textColor="@color/colorBlack"
+                android:textSize="29sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="375sp"
+                android:text=""/>
 
         </LinearLayout>
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>
