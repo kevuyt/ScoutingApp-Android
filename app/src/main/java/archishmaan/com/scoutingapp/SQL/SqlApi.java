@@ -2,6 +2,9 @@ package archishmaan.com.scoutingapp.SQL;
 
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 
+import static archishmaan.com.scoutingapp.Activities.MainActivity.scoutingModelDatabase;
+import static java.sql.DriverManager.getConnection;
+
 public class SqlApi {
     public static void createRow(ScoutingModel entry) {
 

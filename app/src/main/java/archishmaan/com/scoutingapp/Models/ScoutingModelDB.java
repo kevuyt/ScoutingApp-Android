@@ -2,11 +2,11 @@ package archishmaan.com.scoutingapp.Models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 @Entity
 public class ScoutingModelDB {
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
+    private int KeyID;
     private int matchNumber;
     private int teamNumber, depot, lander;
     private boolean autoDrop, marker, autoPark, sample, doubleSample, endHang, endPartial, fullPark;
@@ -116,5 +116,12 @@ public class ScoutingModelDB {
         this.fullPark = fullPark;
     }
 
+    public int getKeyID() {
+        return KeyID;
+    }
+
+    public void setKeyID(int keyID) {
+        KeyID = keyID;
+    }
 }
 

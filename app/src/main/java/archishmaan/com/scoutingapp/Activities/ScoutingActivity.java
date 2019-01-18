@@ -1,6 +1,5 @@
 package archishmaan.com.scoutingapp.Activities;
 
-import android.arch.persistence.room.Room;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +13,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import archishmaan.com.scoutingapp.LocalDB.ScoutingModelDatabase;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
