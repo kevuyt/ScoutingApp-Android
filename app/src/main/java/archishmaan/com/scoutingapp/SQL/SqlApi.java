@@ -1,6 +1,5 @@
 package archishmaan.com.scoutingapp.SQL;
 
-import java.sql.*;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 
 import static archishmaan.com.scoutingapp.Activities.MainActivity.scoutingModelDatabase;
