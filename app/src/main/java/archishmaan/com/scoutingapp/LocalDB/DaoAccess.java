@@ -18,8 +18,8 @@ public interface DaoAccess {
     void insertOnlySingleScoutingModelDB (ScoutingModelDB scoutingModel);
     @Insert
     void insertMultipleScoutingModelDBs (List<ScoutingModelDB> matches);
-    @Query("SELECT * FROM ScoutingModelDB WHERE matchNumber = :matchNumber")
-    ScoutingModelDB fetchOneScoutingModelDBbyMatchNumber(int matchNumber);
+    @Query("SELECT * FROM ScoutingModelDB WHERE KeyID = :keyID")
+    ScoutingModelDB fetchOneScoutingModelDBbyKeyID(int keyID);
     @Query("SELECT COUNT(*) FROM ScoutingModelDB")
     Integer fetchCountScoutingModelDB();
     @Update

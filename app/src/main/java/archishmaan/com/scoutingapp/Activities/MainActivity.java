@@ -28,26 +28,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         scoutingModelDatabase = Room.databaseBuilder(Objects.requireNonNull(getApplicationContext()), ScoutingModelDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
         new Thread(() -> entrys = scoutingModelDatabase.daoAccess().fetchCountScoutingModelDB());
-        int f = 1;
         for (ScoutingModel match : matches) {matches.remove(match);}
-        while (f < entrys) {
+        for (int f = 1; f <= entrys; f++) {
             matches.add(new ScoutingModel(
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).getTournament(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).getMatchNumber(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).getTeamNumber(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).getDepot(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).getLander(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isAutoDrop(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isMarker(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isAutoPark(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isSample(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isDoubleSample(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isEndHang(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isEndPartial(),
-                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyMatchNumber(f).isFullPark()
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).getTournament(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).getMatchNumber(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).getTeamNumber(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).getDepot(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).getLander(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isAutoDrop(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isMarker(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isAutoPark(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isSample(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isDoubleSample(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isEndHang(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isEndPartial(),
+                    scoutingModelDatabase.daoAccess().fetchOneScoutingModelDBbyKeyID(f).isFullPark()
                     )
             );
-            f +=1;
         }
         //loading the default fragment
         loadFragment(new ScoutingActivity());

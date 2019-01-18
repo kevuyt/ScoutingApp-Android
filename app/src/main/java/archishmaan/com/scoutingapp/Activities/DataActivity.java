@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import archishmaan.com.scoutingapp.LocalDB.DaoAccess;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
 
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
@@ -93,13 +91,10 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         linearLayout.addView(export);
         export.setOnClickListener(v -> {
             try {
-                String filename = "Scouting Data " + matches.get(0).getTournament() + ".csv";
+                String filename = "Scouting Data " + matches.get(0).getTournament() + String.valueOf(matches.get(matches.size() - 1).getMatchNumber())+ ".csv";
 
                 File directoryDocument = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
                 File file = new File(directoryDocument, filename);
-                file.setReadable(true);
-                file.setExecutable(true);
-                file.setWritable(true);
                 if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestValue);
                     requestValue+=1;

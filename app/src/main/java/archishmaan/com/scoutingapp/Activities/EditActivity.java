@@ -1,6 +1,5 @@
 package archishmaan.com.scoutingapp.Activities;
 
-import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 
 import java.util.Objects;
 
-import archishmaan.com.scoutingapp.LocalDB.DaoAccess;
 import archishmaan.com.scoutingapp.LocalDB.ScoutingModelDatabase;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
 import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
@@ -37,6 +35,10 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         initView(view);
         scoutingModelDatabase = Room.databaseBuilder(Objects.requireNonNull(getContext()), ScoutingModelDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
         matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
+        int matchNumInt = Integer.parseInt(matchNumEdit.getText().toString());
+        int teamNumInt = Integer.parseInt(teamNumEdit.getText().toString());
+        int depotInt = Integer.parseInt(depotEdit.getText().toString());
+        int landerInt = Integer.parseInt(landerEdit.getText().toString());
         update.setOnClickListener(v -> {
             if (!isClear()) {
                 matches.set(matches.indexOf(updateMatch.get(0)),
@@ -55,10 +57,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                                 endPartParkEdit.isChecked(),
                                 endFullParkEdit.isChecked())
                 );
-                int matchNumInt = Integer.parseInt(matchNumEdit.getText().toString());
-                int teamNumInt = Integer.parseInt(teamNumEdit.getText().toString());
-                int depotInt = Integer.parseInt(depotEdit.getText().toString());
-                int landerInt = Integer.parseInt(landerEdit.getText().toString());
+
                 new Thread(() -> {
                     ScoutingModelDB scoutingModelDB = new ScoutingModelDB(tournamentEdit.getText().toString(),
                             matchNumInt, teamNumInt, depotInt, landerInt,
@@ -84,10 +83,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         delete.setOnClickListener(v -> {
             new Thread(() -> {
                 ScoutingModelDB scoutingModelDB = new ScoutingModelDB(tournamentEdit.getText().toString(),
-                        Integer.parseInt(matchNumEdit.getText().toString()),
-                        Integer.parseInt(teamNumEdit.getText().toString()),
-                        Integer.parseInt(depotEdit.getText().toString()),
-                        Integer.parseInt(landerEdit.getText().toString()),
+                        matchNumInt,teamNumInt, depotInt, landerInt,
                         autoDropEdit.isChecked(),
                         markerEdit.isChecked(),
                         autoParkEdit.isChecked(),
