@@ -1,6 +1,5 @@
 package archishmaan.com.scoutingapp.Activities;
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,33 +11,21 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import java.util.Objects;
-
-import archishmaan.com.scoutingapp.LocalDB.ScoutingModelDatabase;
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
 
 import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
 import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
-import static archishmaan.com.scoutingapp.Activities.MainActivity.scoutingModelDatabase;
-
 
 public class EditActivity extends Fragment implements View.OnClickListener {
     Button update, delete;
     int matchesIndex;
-    private static final String DATABASE_NAME = "matches_db";
     EditText tournamentEdit, matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, doubleSampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         initView(view);
-        scoutingModelDatabase = Room.databaseBuilder(Objects.requireNonNull(getContext()), ScoutingModelDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
         matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
-        int matchNumInt = Integer.parseInt(matchNumEdit.getText().toString());
-        int teamNumInt = Integer.parseInt(teamNumEdit.getText().toString());
-        int depotInt = Integer.parseInt(depotEdit.getText().toString());
-        int landerInt = Integer.parseInt(landerEdit.getText().toString());
         update.setOnClickListener(v -> {
             if (!isClear()) {
                 matches.set(matches.indexOf(updateMatch.get(0)),
@@ -58,19 +45,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                                 endFullParkEdit.isChecked())
                 );
 
-                new Thread(() -> {
-                    ScoutingModelDB scoutingModelDB = new ScoutingModelDB(tournamentEdit.getText().toString(),
-                            matchNumInt, teamNumInt, depotInt, landerInt,
-                            autoDropEdit.isChecked(),
-                            markerEdit.isChecked(),
-                            autoParkEdit.isChecked(),
-                            sampleEdit.isChecked(),
-                            doubleSampleEdit.isChecked(),
-                            endHangEdit.isChecked(),
-                            endPartParkEdit.isChecked(),
-                            endFullParkEdit.isChecked());
-                    scoutingModelDatabase.daoAccess().updateScoutingModelDB(scoutingModelDB);
-                }).start();
                 updateMatch.remove(0);
                 clear();
                 assert getFragmentManager() != null;
@@ -81,19 +55,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
             }
         });
         delete.setOnClickListener(v -> {
-            new Thread(() -> {
-                ScoutingModelDB scoutingModelDB = new ScoutingModelDB(tournamentEdit.getText().toString(),
-                        matchNumInt,teamNumInt, depotInt, landerInt,
-                        autoDropEdit.isChecked(),
-                        markerEdit.isChecked(),
-                        autoParkEdit.isChecked(),
-                        sampleEdit.isChecked(),
-                        doubleSampleEdit.isChecked(),
-                        endHangEdit.isChecked(),
-                        endPartParkEdit.isChecked(),
-                        endFullParkEdit.isChecked());
-                scoutingModelDatabase.daoAccess().deleteScoutingModelDB(scoutingModelDB);
-            }).start();
+
             matches.remove(updateMatch.get(0));
             updateMatch.remove(0);
             clear();
