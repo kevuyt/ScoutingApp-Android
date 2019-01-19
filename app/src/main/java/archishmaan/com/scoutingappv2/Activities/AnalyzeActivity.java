@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp.Activities;
+package archishmaan.com.scoutingappv2.Activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import archishmaan.com.scoutingapp.R;
+import archishmaan.com.scoutingappv2.R;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.

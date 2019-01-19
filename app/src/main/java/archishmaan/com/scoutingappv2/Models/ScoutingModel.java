@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp.Models;
+package archishmaan.com.scoutingappv2.Models;
 
 public class ScoutingModel {
     private int  matchNumber, teamNumber, depot, lander;

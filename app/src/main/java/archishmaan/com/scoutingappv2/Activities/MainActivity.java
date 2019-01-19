@@ -1,7 +1,6 @@
-package archishmaan.com.scoutingapp.Activities;
+package archishmaan.com.scoutingappv2.Activities;
 
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,8 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import archishmaan.com.scoutingapp.R;
-import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
+import archishmaan.com.scoutingappv2.R;
+import static archishmaan.com.scoutingappv2.Activities.DataActivity.updateMatch;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {

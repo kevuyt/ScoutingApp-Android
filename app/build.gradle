@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 
 
 android {
+    signingConfigs {
+        config {
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "archishmaan.com.scoutingapp"
@@ -34,8 +38,8 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     //noinspection GradlePath
-    implementation files('C:/Users/Keval Standard/Documents/GitHub/ScoutingApp-Android/libs/libs/mysql-connector-java-5.1.47.jar')
-    implementation "android.arch.persistence.room:runtime:1.1.1"
+    //implementation files('C:/Users/Keval Standard/Documents/GitHub/ScoutingApp-Android/libs/libs/mysql-connector-java-5.1.47.jar')
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 }
 

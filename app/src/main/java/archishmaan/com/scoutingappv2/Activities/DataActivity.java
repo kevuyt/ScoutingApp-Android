@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp.Activities;
+package archishmaan.com.scoutingappv2.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.R;
+import archishmaan.com.scoutingappv2.Models.ScoutingModel;
+import archishmaan.com.scoutingappv2.R;
 
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -138,19 +138,15 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                     outputStream.write((String.valueOf(fullPark) + System.lineSeparator()).getBytes());
                 }
                 outputStream.close();
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
         return scrollView;
     }
 
     @Override
     public void onClick(View view) {
-
 
     }
 

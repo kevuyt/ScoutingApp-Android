@@ -1,8 +1,8 @@
-package archishmaan.com.scoutingapp.Listeners;
+package archishmaan.com.scoutingappv2.Listeners;
 
 import android.view.View;
 
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
 
 public class UndoListener implements View.OnClickListener {
     @Override
