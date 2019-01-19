@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.Models.ScoutingModelDB;
 import archishmaan.com.scoutingapp.R;
 
-import static archishmaan.com.scoutingapp.Activities.MainActivity.scoutingModelDatabase;
 import static archishmaan.com.scoutingapp.SQL.SqlApi.createRow;
 
 /**
@@ -74,26 +72,6 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
                     endPartPark.isChecked(),
                     endFullPark.isChecked())
             );
-            int teamNumInt = Integer.parseInt(teamNum.getText().toString());
-            int depotInt = Integer.parseInt(depot.getText().toString());
-            int landerInt = Integer.parseInt(lander.getText().toString());
-            new Thread(() -> {
-              ScoutingModelDB scoutingModelDB = new ScoutingModelDB(
-                      tournament.getText().toString(),
-                      Integer.parseInt(matchNum.getText().toString()),
-                      teamNumInt,
-                      depotInt,
-                      landerInt,
-                      autoDrop.isChecked(),
-                      marker.isChecked(),
-                      autoPark.isChecked(),
-                      sample.isChecked(),
-                      doubleSample.isChecked(),
-                      endHang.isChecked(),
-                      endPartPark.isChecked(),
-                      endFullPark.isChecked());
-              scoutingModelDatabase.daoAccess().insertOnlySingleScoutingModelDB(scoutingModelDB);
-            }).start();
             createRow(
                     new ScoutingModel(
                             tournament.getText().toString(),
