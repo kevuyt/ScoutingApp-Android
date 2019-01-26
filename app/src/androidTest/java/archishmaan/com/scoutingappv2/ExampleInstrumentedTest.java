@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp;
+package archishmaan.com.scoutingappv2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

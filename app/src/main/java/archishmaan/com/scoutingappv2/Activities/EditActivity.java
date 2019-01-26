@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp.Activities;
+package archishmaan.com.scoutingappv2.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.R;
+import archishmaan.com.scoutingappv2.Models.ScoutingModel;
+import archishmaan.com.scoutingappv2.R;
 
-import static archishmaan.com.scoutingapp.Activities.ScoutingActivity.matches;
-import static archishmaan.com.scoutingapp.Activities.DataActivity.updateMatch;
+import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingappv2.Activities.DataActivity.updateMatch;
 
 public class EditActivity extends Fragment implements View.OnClickListener {
     Button update, delete;

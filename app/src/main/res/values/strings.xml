@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Scouting App</string>
+    <string name="app_name">Scouting App V2</string>
     <string name="title_scout">Scouting</string>
     <string name="title_data">Data</string>
     <string name="title_analyze">Analyze</string>

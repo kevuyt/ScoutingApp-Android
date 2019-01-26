@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingapp.Activities;
+package archishmaan.com.scoutingappv2.Activities;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,10 +14,9 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.List;
 
-import archishmaan.com.scoutingapp.Models.ScoutingModel;
-import archishmaan.com.scoutingapp.R;
+import archishmaan.com.scoutingappv2.Models.ScoutingModel;
+import archishmaan.com.scoutingappv2.R;
 
-import static archishmaan.com.scoutingapp.SQL.SqlApi.createRow;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -50,6 +49,30 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         Button stash = view.findViewById(R.id.stash);
         initView(view);
         stash.setOnClickListener(this);
+        sample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (doubleSample.isChecked()) doubleSample.setChecked(false);
+            }
+        });
+        doubleSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sample.isChecked()) sample.setChecked(false);
+            }
+        });
+        endPartPark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (endFullPark.isChecked()) endFullPark.setChecked(false);
+            }
+        });
+        endFullPark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (endPartPark.isChecked()) endPartPark.setChecked(false);
+            }
+        });
         //ScrollView scrollView = view.findViewById(R.id.scrollView);
         //stashMessage = Snackbar.make(scrollView, "Stashed", Snackbar.LENGTH_SHORT);
         return view;
@@ -72,26 +95,6 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
                     endPartPark.isChecked(),
                     endFullPark.isChecked())
             );
-            createRow(
-                    new ScoutingModel(
-                            tournament.getText().toString(),
-                            Integer.parseInt(matchNum.getText().toString()),
-                            Integer.parseInt(teamNum.getText().toString()),
-                            Integer.parseInt(depot.getText().toString()),
-                            Integer.parseInt(lander.getText().toString()),
-                            autoDrop.isChecked(),
-                            marker.isChecked(),
-                            autoPark.isChecked(),
-                            sample.isChecked(),
-                            doubleSample.isChecked(),
-                            endHang.isChecked(),
-                            endPartPark.isChecked(),
-                            endFullPark.isChecked()
-                    )
-            );
-            //stashMessage.setAction("Undo", new UndoListener());
-            //stashMessage.show();
-
             clear();
         }
     }
