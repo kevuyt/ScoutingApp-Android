@@ -99,11 +99,15 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         }
     }
     public boolean isClear() {
-        return !(!tournament.getText().toString().equals("") &&
-                !matchNum.getText().toString().equals("") &&
-                !teamNum.getText().toString().equals("") &&
-                !depot.getText().toString().equals("") &&
-                !lander.getText().toString().equals(""));
+        if (depot.getText().toString().equals("")) {
+            depot.setText(String.valueOf(0));
+        }
+        if (lander.getText().toString().equals("")) {
+            lander.setText(String.valueOf(0));
+        }
+        return (tournament.getText().toString().equals("") ||
+                matchNum.getText().toString().equals("") ||
+                teamNum.getText().toString().equals(""));
     }
     public void clear() {
         matchNum.setText(String.valueOf(Integer.parseInt(matchNum.getText().toString()) + 1));

@@ -83,8 +83,6 @@ public class DataActivity extends Fragment implements View.OnClickListener {
             });
         }
         Button export = new Button(getContext());
-        export.setId(matches.get(matches.size() - 1).getTeamNumber());
-
         export.setText("Export");
         export.setTextSize(25);
         export.setWidth(1000);
@@ -108,7 +106,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                 }
 
                 FileOutputStream outputStream = new FileOutputStream(file);
-                outputStream.write(("Tournament Name, Match Number, Team Number, Auto Drop, Marker, Auto Park, Sample, Depot, Lander, End Hang, End Park" + System.lineSeparator()).getBytes());
+                outputStream.write(("Tournament Name,Match Number,Team Number,Auto Drop,Marker,Auto Park,Sample,Depot,Lander,End Hang,End Park" + System.lineSeparator()).getBytes());
 
                 for (ScoutingModel match : matches) {
 
@@ -126,15 +124,15 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                     if (match.isEndPartial()) {endPark = String.valueOf(15);}
                     else if (match.isFullPark()) {endPark = String.valueOf(25);}
                     else {endPark = "n";}
-                    outputStream.write((match.getTournament() + ", ").getBytes());
-                    outputStream.write((match.getMatchNumber() + ", ").getBytes());
-                    outputStream.write((match.getTeamNumber() + ", ").getBytes());
-                    outputStream.write((drop + ", ").getBytes());
-                    outputStream.write((marker + ", ").getBytes());
-                    outputStream.write((autoPark + ", ").getBytes());
-                    outputStream.write((sample + ", ").getBytes());
-                    outputStream.write((match.getDepot() + ", ").getBytes());
-                    outputStream.write((match.getLander() + ", ").getBytes());
+                    outputStream.write((match.getTournament() + ",").getBytes());
+                    outputStream.write((match.getMatchNumber() + ",").getBytes());
+                    outputStream.write((match.getTeamNumber() + ",").getBytes());
+                    outputStream.write((drop + ",").getBytes());
+                    outputStream.write((marker + ",").getBytes());
+                    outputStream.write((autoPark + ",").getBytes());
+                    outputStream.write((sample + ",").getBytes());
+                    outputStream.write((match.getDepot() + ",").getBytes());
+                    outputStream.write((match.getLander() + ",").getBytes());
                     outputStream.write((endPark + System.lineSeparator()).getBytes());
                 }
                 outputStream.close();
