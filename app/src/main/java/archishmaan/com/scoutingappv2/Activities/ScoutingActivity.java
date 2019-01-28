@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
 import archishmaan.com.scoutingappv2.R;
@@ -24,7 +26,6 @@ import archishmaan.com.scoutingappv2.R;
  */
 
 public class ScoutingActivity extends Fragment implements View.OnClickListener{
-    //Snackbar stashMessage;
     public EditText tournament;
     public EditText matchNum;
     public EditText teamNum;
@@ -38,6 +39,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public CheckBox endHang;
     public CheckBox endPartPark;
     public CheckBox endFullPark;
+    public boolean duplicate = false;
     public static List<ScoutingModel> matches = new ArrayList<>();
 
 
@@ -49,37 +51,87 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         Button stash = view.findViewById(R.id.stash);
         initView(view);
         stash.setOnClickListener(this);
-        sample.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (doubleSample.isChecked()) doubleSample.setChecked(false);
-            }
+        sample.setOnClickListener(view1 -> {
+            if (doubleSample.isChecked()) doubleSample.setChecked(false);
         });
-        doubleSample.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (sample.isChecked()) sample.setChecked(false);
-            }
+        doubleSample.setOnClickListener(view12 -> {
+            if (sample.isChecked()) sample.setChecked(false);
         });
-        endPartPark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (endFullPark.isChecked()) endFullPark.setChecked(false);
-            }
+        endPartPark.setOnClickListener(view13 -> {
+            if (endFullPark.isChecked()) endFullPark.setChecked(false);
+            if (endHang.isChecked()) endHang.setChecked(false);
         });
-        endFullPark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (endPartPark.isChecked()) endPartPark.setChecked(false);
-            }
+        endFullPark.setOnClickListener(view14 -> {
+            if (endPartPark.isChecked()) endPartPark.setChecked(false);
+            if (endHang.isChecked()) endHang.setChecked(false);
         });
-        //ScrollView scrollView = view.findViewById(R.id.scrollView);
-        //stashMessage = Snackbar.make(scrollView, "Stashed", Snackbar.LENGTH_SHORT);
+        endHang.setOnClickListener(v -> {
+            if (endPartPark.isChecked()) endPartPark.setChecked(false);
+            if (endFullPark.isChecked()) endFullPark.setChecked(false);
+        });
         return view;
     }
     @Override
     public void onClick(View v) {
-        if (!isClear()) {
+        if (depot.getText().toString().equals("")) {
+            AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+            builder.setTitle("Empty Depot").setMessage("Did this team score in the depot?")
+                    .setPositiveButton("No", (dialog, which) -> {
+                        depot.setText(String.valueOf(0));
+                        if (isNotClear()) {
+                            duplicate = true;
+                            matches.add(new ScoutingModel(
+                                tournament.getText().toString(),
+                                Integer.parseInt(matchNum.getText().toString()),
+                                Integer.parseInt(teamNum.getText().toString()),
+                                Integer.parseInt(depot.getText().toString()),
+                                Integer.parseInt(lander.getText().toString()),
+                                autoDrop.isChecked(),
+                                marker.isChecked(),
+                                autoPark.isChecked(),
+                                sample.isChecked(),
+                                doubleSample.isChecked(),
+                                endHang.isChecked(),
+                                endPartPark.isChecked(),
+                                endFullPark.isChecked())
+                        );
+                        clear();
+                        }
+                    })
+                    .setNegativeButton("Yes", (dialog, which) -> depot.setText(""))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+        if (lander.getText().toString().equals("")) {
+            AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+            builder.setTitle("Empty Lander").setMessage("Did this team score in the lander?")
+                    .setPositiveButton("No", (dialog, which) -> {
+                        lander.setText(String.valueOf(0));
+                        if (isNotClear()) {
+                            duplicate = true;
+                            matches.add(new ScoutingModel(
+                                    tournament.getText().toString(),
+                                    Integer.parseInt(matchNum.getText().toString()),
+                                    Integer.parseInt(teamNum.getText().toString()),
+                                    Integer.parseInt(depot.getText().toString()),
+                                    Integer.parseInt(lander.getText().toString()),
+                                    autoDrop.isChecked(),
+                                    marker.isChecked(),
+                                    autoPark.isChecked(),
+                                    sample.isChecked(),
+                                    doubleSample.isChecked(),
+                                    endHang.isChecked(),
+                                    endPartPark.isChecked(),
+                                    endFullPark.isChecked())
+                            );
+                            clear();
+                        }
+                    })
+                    .setNegativeButton("Yes", (dialog, which) -> lander.setText(""))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+        if (isNotClear() && !duplicate) {
             matches.add(new ScoutingModel(
                     tournament.getText().toString(),
                     Integer.parseInt(matchNum.getText().toString()),
@@ -98,16 +150,13 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
             clear();
         }
     }
-    public boolean isClear() {
-        if (depot.getText().toString().equals("")) {
-            depot.setText(String.valueOf(0));
-        }
-        if (lander.getText().toString().equals("")) {
-            lander.setText(String.valueOf(0));
-        }
-        return (tournament.getText().toString().equals("") ||
-                matchNum.getText().toString().equals("") ||
-                teamNum.getText().toString().equals(""));
+    public boolean isNotClear() {
+
+        return (!tournament.getText().toString().equals("") &&
+                !matchNum.getText().toString().equals("") &&
+                !teamNum.getText().toString().equals("") &&
+                !depot.getText().toString().equals("") &&
+                !lander.getText().toString().equals(""));
     }
     public void clear() {
         matchNum.setText(String.valueOf(Integer.parseInt(matchNum.getText().toString()) + 1));
