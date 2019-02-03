@@ -12,7 +12,6 @@ import archishmaan.com.scoutingappv2.R;
 
 import static archishmaan.com.scoutingappv2.Activities.DataActivity.updateMatch;
 
-//implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,29 +29,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         switch (item.getItemId()) {
             case R.id.scout:
-                while (updateMatch.size() != 0) {
-                    updateMatch.remove(0);
-                }
+                while (updateMatch.size() != 0) updateMatch.remove(0);
                 fragment = new ScoutingActivity();
-
                 break;
-
             case R.id.data:
-                while (updateMatch.size() != 0) {
-                    updateMatch.remove(0);
-                }
+                while (updateMatch.size() != 0) updateMatch.remove(0);
                 fragment = new DataActivity();
-
                 break;
-
             case R.id.analyze:
-                while (updateMatch.size() != 0) {
-                    updateMatch.remove(0);
-                }
+                while (updateMatch.size() != 0) updateMatch.remove(0);
                 fragment = new AnalyzeActivity();
-
                 break;
-
             default:
                 break;
         }
@@ -61,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public boolean loadFragment(Fragment fragment) {
-        //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
