@@ -17,6 +17,8 @@ import java.util.List;
 
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
 import archishmaan.com.scoutingappv2.R;
+import archishmaan.com.scoutingappv2.SQL.Local.Matches;
+import archishmaan.com.scoutingappv2.SQL.Local.MatchesDatabase;
 
 
 /**
@@ -45,8 +47,8 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
-
         Button stash = view.findViewById(R.id.stash);
+M
         initView(view);
         stash.setOnClickListener(this);
         checkDuplicates();
@@ -54,25 +56,25 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
-        if (depot.getText().toString().equals("")) createDialog("Empty Depot", "Did this team score in the depot?");
-        else if (lander.getText().toString().equals("")) createDialog("Empty Lander", "Did this team score in the lander?");
+        if (depot.getText().toString().equals("")) createDialog("Empty Depot", "Did this team score in the depot?", depot);
+        if (lander.getText().toString().equals("")) createDialog("Empty Lander", "Did this team score in the lander?", lander);
         if (isNotClear() && !duplicate) {
             createMatch();
             clear();
         }
     }
-    public void createDialog(String title, String message) {
+    public void createDialog(String title, String message, EditText place) {
         AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
         builder.setTitle(title).setMessage(message)
                 .setPositiveButton("No", (dialog, which) -> {
-                    lander.setText(String.valueOf(0));
+                    place.setText(String.valueOf(0));
                     if (isNotClear()) {
                         duplicate = true;
                         createMatch();
                         clear();
                     }
                 })
-                .setNegativeButton("Yes", (dialog, which) -> lander.setText(""))
+                .setNegativeButton("Yes", (dialog, which) -> place.setText(""))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }

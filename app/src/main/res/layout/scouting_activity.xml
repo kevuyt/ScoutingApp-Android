@@ -7,7 +7,8 @@
     android:layout_marginBottom="56dp"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context=".Activities.ScoutingActivity">
+    tools:context=".Activities.ScoutingActivity"
+    android:background="@color/colorBlack">
 
 
 
@@ -19,13 +20,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/details"
@@ -33,39 +36,53 @@
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/details"
-
+                android:textColor="@color/colorAccent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <EditText
+
                 android:id="@+id/tournament"
+                android:textColor="@color/colorAccent"
                 android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:ems="6"
                 android:textSize="25sp"
                 android:hint="@string/tournament_name"
+                android:textColorHint="@color/colorAccent"
                 android:inputType="text"
                 android:maxLines="1"
+                android:shadowColor="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
                 />
 
             <EditText
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:id="@+id/match_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"
                 android:textSize="25sp"
                 android:hint="@string/match_number"
-                android:inputType="number" />
+                android:inputType="number"
+                android:shadowColor="@color/colorAccent"/>
 
             <EditText
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:id="@+id/team_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="6"
                 android:textSize="25sp"
                 android:hint="@string/team_number"
-                android:inputType="number" />
+                android:inputType="number"
+                android:shadowColor="@color/colorAccent"/>
 
             <TextView
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,43 +91,65 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_drop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="@string/auto_drop" />
+                android:text="@string/auto_drop"
+                android:shadowColor="@color/colorAccent"
+                />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_marker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="@string/marker" />
+                android:text="@string/marker"
+                android:shadowColor="@color/colorAccent"/>
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="@string/auto_parked" />
+                android:text="@string/auto_parked"
+                android:shadowColor="@color/colorAccent"/>
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_sample"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/sample"
+                android:shadowColor="@color/colorAccent"
                 />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/auto_double_sample"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="@string/double_sample"
+                android:shadowColor="@color/colorAccent"
                 />
 
             <TextView
+                android:textColor="@color/colorAccent"
                 android:id="@+id/tele_op_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,6 +158,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <EditText
+                android:backgroundTint="@color/colorAccent"
+                android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:id="@+id/depot_minerals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,6 +171,10 @@
                 android:inputType="number"/>
 
             <EditText
+                android:backgroundTint="@color/colorAccent"
+                android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:id="@+id/lander_minerals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,6 +184,7 @@
                 android:inputType="number" />
 
             <TextView
+                android:textColor="@color/colorAccent"
                 android:id="@+id/end_game_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,6 +193,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/end_hang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,6 +204,9 @@
                 android:text="@string/end_hang" />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/end_partial_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,6 +214,10 @@
                 android:text="@string/end_partial_park" />
 
             <CheckBox
+                android:buttonTint="@color/colorAccent"
+                android:backgroundTint="@color/colorAccent"
+                android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/end_full_park"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
