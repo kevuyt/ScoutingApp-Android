@@ -1,4 +1,4 @@
-package archishmaan.com.scoutingappv2.localDB;
+package archishmaan.com.scoutingappv2.SQL.Local;
 
 import android.arch.persistence.room.*;
 
