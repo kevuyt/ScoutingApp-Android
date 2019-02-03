@@ -44,7 +44,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                                 endPartParkEdit.isChecked(),
                                 endFullParkEdit.isChecked())
                 );
-
                 updateMatch.remove(0);
                 clear();
                 assert getFragmentManager() != null;
@@ -55,7 +54,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
             }
         });
         delete.setOnClickListener(v -> {
-
             matches.remove(updateMatch.get(0));
             updateMatch.remove(0);
             clear();
