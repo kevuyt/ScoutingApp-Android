@@ -48,10 +48,10 @@
                 android:ems="6"
                 android:textSize="25sp"
                 android:hint="@string/tournament_name"
-                android:textColorHint="@color/colorAccent"
                 android:inputType="text"
                 android:maxLines="1"
                 android:shadowColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:backgroundTint="@color/colorAccent"
                 />
 

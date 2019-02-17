@@ -35,7 +35,7 @@ import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
  * Created by Archishmaan Peyyety on 11/24/18.
  * Project: ScoutingApp
  */
-@SuppressWarnings("SpellCheckingInspection")
+
 public class DataActivity extends Fragment implements View.OnClickListener {
     FileOutputStream outputStream;
     ScrollView scrollView;
@@ -48,7 +48,9 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        scrollView = new ScrollView(getContext());
+        View view = inflater.inflate(R.layout.data_activity, container, false);
+        view.setBackgroundColor(getResources().getColor(android.R.color.black));
+        scrollView = view.findViewById(R.id.scrollView);
         linearLayout = new LinearLayout(getContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(linearLayout);
@@ -81,11 +83,12 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
             }
         });
-        return scrollView;
+        return view;
     }
 
     @Override
     public void onClick(View view) {}
+    @SuppressLint("SetTextI18n")
     public void createExportButton(Button export) {
         export.setText("Export");
         export.setTextSize(25);
@@ -93,6 +96,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         export.setHeight(125);
         export.getBackground().setColorFilter(Color.parseColor("#DAA620"), PorterDuff.Mode.DARKEN);
     }
+    @SuppressLint("SetTextI18n")
     public void createButton(Button button, ScoutingModel match) {
         button.setText ("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber() + ", Score: " + score);
         button.setId(match.getMatchNumber());
@@ -158,6 +162,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
             outputStream.write((sample + ",").getBytes());
             outputStream.write((match.getDepot() + ",").getBytes());
             outputStream.write((match.getLander() + ",").getBytes());
+            outputStream.write((hang + ",").getBytes());
             outputStream.write((endPark + System.lineSeparator()).getBytes());
         } catch (IOException e) {
             e.printStackTrace();

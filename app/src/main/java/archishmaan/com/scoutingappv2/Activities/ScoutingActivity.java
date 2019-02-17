@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import archishmaan.com.scoutingappv2.LocalDB.Matches;
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
 import archishmaan.com.scoutingappv2.R;
-import archishmaan.com.scoutingappv2.SQL.Local.Matches;
-import archishmaan.com.scoutingappv2.SQL.Local.MatchesDatabase;
 
+import static archishmaan.com.scoutingappv2.Activities.MainActivity.primaryKeys;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -43,12 +45,14 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public boolean duplicate = false;
     public static List<ScoutingModel> matches = new ArrayList<>();
 
+
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
+
+
         Button stash = view.findViewById(R.id.stash);
-M
         initView(view);
         stash.setOnClickListener(this);
         checkDuplicates();
@@ -63,18 +67,18 @@ M
             clear();
         }
     }
-    public void createDialog(String title, String message, EditText place) {
-        AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+    public void createDialog(String title, String message, EditText scoringArea) {
+        AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle(title).setMessage(message)
                 .setPositiveButton("No", (dialog, which) -> {
-                    place.setText(String.valueOf(0));
+                    scoringArea.setText(String.valueOf(0));
                     if (isNotClear()) {
                         duplicate = true;
                         createMatch();
                         clear();
                     }
                 })
-                .setNegativeButton("Yes", (dialog, which) -> place.setText(""))
+                .setNegativeButton("Yes", (dialog, which) -> scoringArea.setText(""))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
@@ -113,6 +117,26 @@ M
                 endHang.isChecked(),
                 endPartPark.isChecked(),
                 endFullPark.isChecked()));
+
+        Matches matches = new Matches();
+        matches.setId(primaryKeys.size());
+        matches.setTournament(tournament.getText().toString());
+        matches.setMatchNumber(Integer.parseInt(matchNum.getText().toString()));
+        matches.setTeamNumber(Integer.parseInt(teamNum.getText().toString()));
+        matches.setDepot(Integer.parseInt(depot.getText().toString()));
+        matches.setLander(Integer.parseInt(lander.getText().toString()));
+        matches.setAutoDrop(autoDrop.isChecked());
+        matches.setMarker(marker.isChecked());
+        matches.setAutoPark(autoPark.isChecked());
+        matches.setSample(sample.isChecked());
+        matches.setDoubleSample(doubleSample.isChecked());
+        matches.setEndHang(endHang.isChecked());
+        matches.setEndPartial(endPartPark.isChecked());
+        matches.setFullPark(endFullPark.isChecked());
+
+        MainActivity.matchesDatabase.matchesDao().addMatch(matches);
+        primaryKeys.add(primaryKeys.size());
+        Toast.makeText(getActivity(), "Stashed successfully", Toast.LENGTH_SHORT).show();
     }
     public boolean isNotClear() {
 
@@ -150,10 +174,16 @@ M
         endHang = view.findViewById(R.id.end_hang);
         endPartPark = view.findViewById(R.id.end_partial_park);
         endFullPark = view.findViewById(R.id.end_full_park);
-        matchNum.setText(String.valueOf(matches.size() + 1));
+        if (matches.size()>0) {
+            matchNum.setText(String.valueOf(matches.get(matches.size() - 1).getMatchNumber() + 1));
+        }
+        else {
+        matchNum.setText(String.valueOf(1));
+        }
         if (matches.size() > 0) {
         tournament.setText(matches.get(matches.size()-1).getTournament());
         }
     }
+
 
 }

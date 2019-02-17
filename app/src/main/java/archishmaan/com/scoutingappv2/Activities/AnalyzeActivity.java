@@ -16,13 +16,11 @@ import archishmaan.com.scoutingappv2.R;
  * Project: ScoutingApp
  */
 public class AnalyzeActivity extends Fragment {
-    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      View view = inflater.inflate(R.layout.analysis_activity, container, false);
-        //code
-      return view;
+
+      return inflater.inflate(R.layout.analysis_activity, container, false);
     }
 
 

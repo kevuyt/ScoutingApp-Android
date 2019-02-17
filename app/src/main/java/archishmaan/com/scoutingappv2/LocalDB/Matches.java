@@ -1,34 +1,34 @@
-package archishmaan.com.scoutingappv2.SQL.Local;
+package archishmaan.com.scoutingappv2.LocalDB;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "matches")
 public class Matches {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "match_ID")
-    public int matchID;
-    @ColumnInfo(name = "match_Number")
-    private int matchNumber;
-    private int teamNumber, depot, lander;
-    private boolean autoDrop, marker, autoPark, sample, doubleSample, endHang, endPartial, fullPark;
+
+    @PrimaryKey
+    private int id;
+
+    private int  matchNumber;
+    private int teamNumber;
+    private int depot;
+    private int lander;
+    private boolean autoDrop;
+    private boolean marker;
+    private boolean autoPark;
+    private boolean sample;
+    private boolean doubleSample;
+    private boolean endHang;
+    private boolean endPartial;
+    private boolean fullPark;
     private String tournament;
-    public Matches(String tournament, int matchNumber, int teamNumber, int depot, int lander, boolean autoDrop, boolean marker,
-                   boolean autoPark, boolean sample, boolean doubleSample, boolean endHang, boolean endPartial, boolean fullPark){
-        this.tournament = tournament;
-        this.matchNumber = matchNumber;
-        this.teamNumber = teamNumber;
-        this.depot = depot;
-        this.lander = lander;
-        this.autoDrop = autoDrop;
-        this.marker = marker;
-        this.autoPark = autoPark;
-        this.sample = sample;
-        this.doubleSample =  doubleSample;
-        this.endHang = endHang;
-        this.endPartial = endPartial;
-        this.fullPark = fullPark;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getMatchNumber() {
@@ -53,6 +53,14 @@ public class Matches {
 
     public void setDepot(int depot) {
         this.depot = depot;
+    }
+
+    public int getLander() {
+        return lander;
+    }
+
+    public void setLander(int lander) {
+        this.lander = lander;
     }
 
     public boolean isAutoDrop() {
@@ -109,14 +117,6 @@ public class Matches {
 
     public void setEndPartial(boolean endPartial) {
         this.endPartial = endPartial;
-    }
-
-    public int getLander() {
-        return lander;
-    }
-
-    public void setLander(int lander) {
-        this.lander = lander;
     }
 
     public boolean isFullPark() {
