@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public static MatchesDatabase matchesDatabase;
     public static List<Integer> primaryKeys = new ArrayList<>();
+    public static Fragment fragment;
 
 
     @Override
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment = null;
+        fragment = null;
 
         switch (item.getItemId()) {
             case R.id.scout:

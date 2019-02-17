@@ -5,14 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Objects;
 
 import archishmaan.com.scoutingappv2.LocalDB.Matches;
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
@@ -24,7 +30,7 @@ import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
 import static archishmaan.com.scoutingappv2.Activities.DataActivity.updateMatch;
 
 public class EditActivity extends Fragment implements View.OnClickListener {
-    Button update, delete;
+    Button update;
     int matchesIndex;
     EditText tournamentEdit, matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, doubleSampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
@@ -81,39 +87,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                         .commit();
             }
         });
-        delete.setOnClickListener(v -> {
-
-            Matches match = new Matches();
-            try {match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());}
-            catch (Exception e) {e.printStackTrace();}
-            match.setTournament(updateMatch.get(0).getTournament());
-            match.setMatchNumber(updateMatch.get(0).getMatchNumber());
-            match.setTeamNumber(updateMatch.get(0).getTeamNumber());
-            match.setDepot(updateMatch.get(0).getDepot());
-            match.setLander(updateMatch.get(0).getLander());
-            match.setAutoDrop(updateMatch.get(0).isAutoDrop());
-            match.setMarker(updateMatch.get(0).isMarker());
-            match.setSample(updateMatch.get(0).isSample());
-            match.setDoubleSample(updateMatch.get(0).isDoubleSample());
-            match.setAutoPark(updateMatch.get(0).isAutoPark());
-            match.setEndHang(updateMatch.get(0).isEndHang());
-            match.setEndPartial(updateMatch.get(0).isEndPartial());
-            match.setFullPark(updateMatch.get(0).isFullPark());
-
-            matchesDatabase.matchesDao().deleteMatch(match);
-            primaryKeys.add(primaryKeys.size());
-            Toast.makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-
-            matches.remove(updateMatch.get(0));
-            updateMatch.remove(0);
-            clear();
-            assert getFragmentManager()!= null;
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new DataActivity())
-                    .commit();
-        });
-
         return view;
     }
     @Override
@@ -128,15 +101,16 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                 landerEdit.getText().toString().equals(""));
     }
     public  void initView(View view) {
-
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#000000"));
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
 
+        setHasOptionsMenu(true);
+
         update = view.findViewById((R.id.update));
-        delete = view.findViewById(R.id.delete);
+
         tournamentEdit = view.findViewById(R.id.tournament);
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
@@ -180,5 +154,60 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endPartParkEdit.setChecked(false);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
+        inflater.inflate(R.menu.app_bar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+       switch (item.getItemId()) {
+
+           case R.id.action_delete:
+               AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+               builder.setTitle("Delete Match").setMessage("Are you sure you want to delete this match? This action cannot be undone.")
+                       .setPositiveButton("Yes", (dialog, which) -> {
+                           Matches match = new Matches();
+                           try {match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());}
+                           catch (Exception e) {e.printStackTrace();}
+                           match.setTournament(updateMatch.get(0).getTournament());
+                           match.setMatchNumber(updateMatch.get(0).getMatchNumber());
+                           match.setTeamNumber(updateMatch.get(0).getTeamNumber());
+                           match.setDepot(updateMatch.get(0).getDepot());
+                           match.setLander(updateMatch.get(0).getLander());
+                           match.setAutoDrop(updateMatch.get(0).isAutoDrop());
+                           match.setMarker(updateMatch.get(0).isMarker());
+                           match.setSample(updateMatch.get(0).isSample());
+                           match.setDoubleSample(updateMatch.get(0).isDoubleSample());
+                           match.setAutoPark(updateMatch.get(0).isAutoPark());
+                           match.setEndHang(updateMatch.get(0).isEndHang());
+                           match.setEndPartial(updateMatch.get(0).isEndPartial());
+                           match.setFullPark(updateMatch.get(0).isFullPark());
+
+                           matchesDatabase.matchesDao().deleteMatch(match);
+                           primaryKeys.add(primaryKeys.size());
+                           Toast.makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+
+                           matches.remove(updateMatch.get(0));
+                           updateMatch.remove(0);
+                           clear();
+                           assert getFragmentManager()!= null;
+                           getFragmentManager()
+                                   .beginTransaction()
+                                   .replace(R.id.fragment_container, new DataActivity())
+                                   .commit();
+                       })
+                       .setNegativeButton("No", (dialog, which) -> {})
+                       .setIcon(android.R.drawable.ic_dialog_alert)
+                       .show();
+
+               return true;
+
+           default:
+               return super.onOptionsItemSelected(item);
+       }
+    }
 }

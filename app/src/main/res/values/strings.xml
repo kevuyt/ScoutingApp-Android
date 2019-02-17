@@ -24,4 +24,7 @@
     <string name="double_sample">Double Sample</string>
     <string name="tournament_name">Tournament Name</string>
     <string name="delete">Delete</string>
+    <string name="delete_button">Delete</string>
+    <string name="export_button">Export</string>
+    <string name="work_in_progress">Work in Progress</string>
 </resources>

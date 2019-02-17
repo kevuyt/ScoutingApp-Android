@@ -2,6 +2,7 @@ package archishmaan.com.scoutingappv2.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -12,13 +13,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,7 +36,10 @@ import java.util.Objects;
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
 import archishmaan.com.scoutingappv2.R;
 
+import static archishmaan.com.scoutingappv2.Activities.MainActivity.fragment;
+import static archishmaan.com.scoutingappv2.Activities.MainActivity.matchesDatabase;
 import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
+import static archishmaan.com.scoutingappv2.R.string.export_button;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -59,9 +68,8 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {}
 
-    @SuppressLint("SetTextI18n")
     public void createExportButton(Button export) {
-        export.setText("Export");
+        export.setText(getString(export_button));
         export.setTextSize(25);
         export.setWidth(1000);
         export.setHeight(125);
@@ -69,6 +77,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         linearLayout.addView(export);
         export.setOnClickListener(v -> createCSV());
     }
+
 
     @SuppressLint("SetTextI18n")
     public void createButton(Button button, ScoutingModel match){
@@ -82,6 +91,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         final ScoutingModel updateMatchEntry = match;
         button.setOnClickListener(v -> {
             updateMatch.add(updateMatchEntry);
+            fragment = new EditActivity();
             loadFragment(new EditActivity());
         });
     }
@@ -100,28 +110,33 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     }
 
     public void createCSV() {
-        String filename = "Scouting Data " + matches.get(0).getTournament() + String.valueOf(matches.get(matches.size() - 1).getMatchNumber())+ ".csv";
 
-        File directoryDocument = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File file = new File(directoryDocument, filename);
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestValue);
-            requestValue+=1;
-        }
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestValue);
-            requestValue+=1;
-        }
-        try {
-            outputStream = new FileOutputStream(file);
-            outputStream.write(("Tournament Name,Match Number,Team Number,Auto Drop,Marker,Auto Park,Sample,Depot,Lander,End Hang,End Park" + System.lineSeparator()).getBytes());
-            for (ScoutingModel match : matches)createRows(match);
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (matches.size()>0) {
+            String filename = "Scouting Data " + matches.get(0).getTournament() + String.valueOf(matches.get(matches.size() - 1).getMatchNumber()) + ".csv";
 
+            File directoryDocument = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File file = new File(directoryDocument, filename);
+            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestValue);
+                requestValue += 1;
+            }
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestValue);
+                requestValue += 1;
+            }
+            try {
+                outputStream = new FileOutputStream(file);
+                outputStream.write(("Tournament Name,Match Number,Team Number,Auto Drop,Marker,Auto Park,Sample,Depot,Lander,End Hang,End Park" + System.lineSeparator()).getBytes());
+                for (ScoutingModel match : matches) createRows(match);
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
+        }
+        else {
+            Toast.makeText(getActivity(), "No matches to export", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void createRows(ScoutingModel match){
@@ -161,17 +176,21 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         view.setBackgroundColor(getResources().getColor(android.R.color.black));
         scrollView = view.findViewById(R.id.scrollView);
         linearLayout = view.findViewById(R.id.linearLayout);
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#000000"));
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+
         for (ScoutingModel match : matches) {
             score = 0;
             Button button = new Button(getContext());
             updateScore(match);
             createButton(button, match);
         }
+
         Button export = new Button(getContext());
         createExportButton(export);
     }
@@ -184,4 +203,43 @@ public class DataActivity extends Fragment implements View.OnClickListener {
                 .commit();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.app_bar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId())
+        {
+
+        case R.id.action_delete:
+            if (matches.size()>0) {
+            AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+            builder.setTitle("Clear all matches").setMessage("Are you sure you want to clear all matches? This action cannot be undone.")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        matches.clear();
+                        int matchesCount = matchesDatabase.matchesDao().getAll().size();
+                        for (int i = 0; i<matchesCount;i++) {
+                            matchesDatabase.matchesDao().deleteMatch(matchesDatabase.matchesDao().getMatch(i+1).get(0));
+                        }
+                        assert getFragmentManager()!= null;
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, new DataActivity())
+                                .commit();
+                        Toast.makeText(getActivity(), "Matches Cleared", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {})
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();}
+            return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

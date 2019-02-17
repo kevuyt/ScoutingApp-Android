@@ -33,8 +33,8 @@
                 layout="@layout/toolbar_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <TextView
                 android:id="@+id/details"
@@ -46,7 +46,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <EditText
-
                 android:id="@+id/tournament"
                 android:textColor="@color/colorAccent"
                 android:layout_width="300sp"

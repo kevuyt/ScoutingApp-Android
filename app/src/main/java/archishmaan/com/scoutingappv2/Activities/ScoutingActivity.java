@@ -62,9 +62,14 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         if (depot.getText().toString().equals("")) createDialog("Empty Depot", "Did this team score in the depot?", depot);
         if (lander.getText().toString().equals("")) createDialog("Empty Lander", "Did this team score in the lander?", lander);
-        if (isNotClear() && !duplicate) {
+        if (isNotClear()) {
+            if (!duplicate) {
             createMatch();
             clear();
+            }
+            else {
+                Toast.makeText(getActivity(), "Make sure you filled in all details!", Toast.LENGTH_LONG).show();
+            }
         }
     }
     public void createDialog(String title, String message, EditText scoringArea) {
@@ -103,6 +108,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         });
     }
     public void createMatch() {
+        try {
         matches.add(new ScoutingModel(
                 tournament.getText().toString(),
                 Integer.parseInt(matchNum.getText().toString()),
@@ -137,6 +143,11 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         MainActivity.matchesDatabase.matchesDao().addMatch(matches);
         primaryKeys.add(primaryKeys.size());
         Toast.makeText(getActivity(), "Stashed successfully", Toast.LENGTH_SHORT).show();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Cannot stash numbers larger than 2 million", Toast.LENGTH_SHORT).show();
+        }
     }
     public boolean isNotClear() {
 
