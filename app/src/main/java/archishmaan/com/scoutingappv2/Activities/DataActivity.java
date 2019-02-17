@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,45 +50,15 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.data_activity, container, false);
-        view.setBackgroundColor(getResources().getColor(android.R.color.black));
-        scrollView = view.findViewById(R.id.scrollView);
-        linearLayout = new LinearLayout(getContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        scrollView.addView(linearLayout);
-        for (ScoutingModel match : matches) {
-            score = 0;
-            Button button = new Button(getContext());
-            updateScore(match);
-            createButton(button, match);
-            button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
-            linearLayout.addView(button);
-            final ScoutingModel updateMatchEntry = match;
-            button.setOnClickListener(v -> {
-                updateMatch.add(updateMatchEntry);
-                assert getFragmentManager() != null;
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new EditActivity())
-                        .commit();
-            });
-        }
-        Button export = new Button(getContext());
-        createExportButton(export);
-        linearLayout.addView(export);
-        export.setOnClickListener(v -> {
-            try {
-                createCSV();
-                for (ScoutingModel match : matches)createRows(match);
-                outputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+
+        initView(view);
+
         return view;
     }
 
     @Override
     public void onClick(View view) {}
+
     @SuppressLint("SetTextI18n")
     public void createExportButton(Button export) {
         export.setText("Export");
@@ -95,15 +66,26 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         export.setWidth(1000);
         export.setHeight(125);
         export.getBackground().setColorFilter(Color.parseColor("#DAA620"), PorterDuff.Mode.DARKEN);
+        linearLayout.addView(export);
+        export.setOnClickListener(v -> createCSV());
     }
+
     @SuppressLint("SetTextI18n")
-    public void createButton(Button button, ScoutingModel match) {
+    public void createButton(Button button, ScoutingModel match){
         button.setText ("Match #: " + match.getMatchNumber() + ", Team #: " + match.getTeamNumber() + ", Score: " + score);
         button.setId(match.getMatchNumber());
         button.setTextSize(15);
         button.setWidth(1000);
         button.setHeight(100);
+        button.getBackground().setColorFilter(Color.parseColor("#DAA520"), PorterDuff.Mode.DARKEN);
+        linearLayout.addView(button);
+        final ScoutingModel updateMatchEntry = match;
+        button.setOnClickListener(v -> {
+            updateMatch.add(updateMatchEntry);
+            loadFragment(new EditActivity());
+        });
     }
+
     public void updateScore(ScoutingModel match) {
         if (match.isAutoDrop()) {score +=30;}
         if (match.isSample()) {score+=25;}
@@ -116,6 +98,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         if (match.isEndPartial()) {score+=15;}
         if (match.isFullPark()) {score+=25;}
     }
+
     public void createCSV() {
         String filename = "Scouting Data " + matches.get(0).getTournament() + String.valueOf(matches.get(matches.size() - 1).getMatchNumber())+ ".csv";
 
@@ -132,11 +115,15 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         try {
             outputStream = new FileOutputStream(file);
             outputStream.write(("Tournament Name,Match Number,Team Number,Auto Drop,Marker,Auto Park,Sample,Depot,Lander,End Hang,End Park" + System.lineSeparator()).getBytes());
-        } catch (IOException e) {
+            for (ScoutingModel match : matches)createRows(match);
+            outputStream.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+
     }
+
     public void createRows(ScoutingModel match){
         if (match.isAutoDrop()) {drop = "y";}
         else {drop = "n";}
@@ -169,4 +156,32 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    public void initView (View view) {
+        view.setBackgroundColor(getResources().getColor(android.R.color.black));
+        scrollView = view.findViewById(R.id.scrollView);
+        linearLayout = view.findViewById(R.id.linearLayout);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#000000"));
+        MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
+        mainActivity.setSupportActionBar(toolbar);
+        for (ScoutingModel match : matches) {
+            score = 0;
+            Button button = new Button(getContext());
+            updateScore(match);
+            createButton(button, match);
+        }
+        Button export = new Button(getContext());
+        createExportButton(export);
+    }
+
+    public void loadFragment (Fragment fragment) {
+        assert getFragmentManager() != null;
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
+
 }

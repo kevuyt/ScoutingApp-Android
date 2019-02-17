@@ -3,7 +3,6 @@ package archishmaan.com.scoutingappv2.Activities;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
-import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -27,51 +26,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static MatchesDatabase matchesDatabase;
     public static List<Integer> primaryKeys = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        primaryKeys.add(0);
 
-        matchesDatabase = Room.databaseBuilder(getApplicationContext(),
-                MatchesDatabase.class, "matchesdb").allowMainThreadQueries()
-                .build();
 
-        int matchesCount = matchesDatabase.matchesDao().getAll().size();
 
-        for (int i = 0; i < matchesCount; i++) {
-
-                try {
-                    Matches match = matchesDatabase.matchesDao().getMatch(i + 1).get(0);
-                    matches.add(
-                            new ScoutingModel(
-                                    match.getTournament(),
-                                    match.getMatchNumber(),
-                                    match.getTeamNumber(),
-                                    match.getDepot(),
-                                    match.getLander(),
-                                    match.isAutoDrop(),
-                                    match.isMarker(),
-                                    match.isAutoPark(),
-                                    match.isSample(),
-                                    match.isDoubleSample(),
-                                    match.isEndHang(),
-                                    match.isEndPartial(),
-                                    match.isFullPark()));
-                    primaryKeys.add(primaryKeys.size());
-                } catch (Exception e)
-                {
-                    Toast.makeText(getApplicationContext(), "No entrys in database", Toast.LENGTH_SHORT).show();
-                }
-
-        }
+        createDb();
 
         loadFragment(new ScoutingActivity());
         BottomNavigationView navigation = findViewById(R.id.nav);
         navigation.setOnNavigationItemSelectedListener(this);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -106,6 +75,49 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             return true;
         }
             return false;
+    }
+
+    public void createDb () {
+        primaryKeys.add(0);
+
+        matchesDatabase = Room.databaseBuilder(getApplicationContext(),
+                MatchesDatabase.class, "matchesdb").allowMainThreadQueries()
+                .build();
+
+        loadMatches();
+
+        }
+
+    public void loadMatches() {
+        int matchesCount = matchesDatabase.matchesDao().getAll().size();
+
+        matches.clear();
+        for (int i = 0; i < matchesCount; i++) {
+
+            try {
+                Matches match = matchesDatabase.matchesDao().getMatch(i + 1).get(0);
+                matches.add(
+                        new ScoutingModel(
+                                match.getTournament(),
+                                match.getMatchNumber(),
+                                match.getTeamNumber(),
+                                match.getDepot(),
+                                match.getLander(),
+                                match.isAutoDrop(),
+                                match.isMarker(),
+                                match.isAutoPark(),
+                                match.isSample(),
+                                match.isDoubleSample(),
+                                match.isEndHang(),
+                                match.isEndPartial(),
+                                match.isFullPark()));
+                primaryKeys.add(primaryKeys.size());
+            } catch (Exception e)
+            {
+                Toast.makeText(getApplicationContext(), "No entrys in database", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
 }

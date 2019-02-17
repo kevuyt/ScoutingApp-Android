@@ -1,22 +1,18 @@
 package archishmaan.com.scoutingappv2.Activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.List;
-import java.util.Objects;
 
 import archishmaan.com.scoutingappv2.LocalDB.Matches;
 import archishmaan.com.scoutingappv2.Models.ScoutingModel;
@@ -89,7 +85,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
 
             Matches match = new Matches();
             try {match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());}
-            catch (Exception e) {Toast.makeText(getActivity(), "Potential Error", Toast.LENGTH_SHORT).show(); }
+            catch (Exception e) {e.printStackTrace();}
             match.setTournament(updateMatch.get(0).getTournament());
             match.setMatchNumber(updateMatch.get(0).getMatchNumber());
             match.setTeamNumber(updateMatch.get(0).getTeamNumber());
@@ -132,6 +128,13 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                 landerEdit.getText().toString().equals(""));
     }
     public  void initView(View view) {
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#000000"));
+        MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
+        mainActivity.setSupportActionBar(toolbar);
+
         update = view.findViewById((R.id.update));
         delete = view.findViewById(R.id.delete);
         tournamentEdit = view.findViewById(R.id.tournament);
@@ -176,5 +179,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         endFullParkEdit.setChecked(false);
         endPartParkEdit.setChecked(false);
     }
+
 
 }

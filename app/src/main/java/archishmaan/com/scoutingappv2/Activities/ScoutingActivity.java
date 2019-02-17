@@ -1,10 +1,12 @@
 package archishmaan.com.scoutingappv2.Activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,12 +47,10 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public boolean duplicate = false;
     public static List<ScoutingModel> matches = new ArrayList<>();
 
-
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
-
 
         Button stash = view.findViewById(R.id.stash);
         initView(view);
@@ -161,6 +161,13 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         endPartPark.setChecked(false);
     }
     public void initView(View view){
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#000000"));
+        MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
+        mainActivity.setSupportActionBar(toolbar);
+
         tournament = view.findViewById(R.id.tournament);
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
@@ -184,6 +191,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         tournament.setText(matches.get(matches.size()-1).getTournament());
         }
     }
+
 
 
 }

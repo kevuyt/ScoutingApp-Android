@@ -27,6 +27,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include
+                layout="@layout/toolbar_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/delete"
@@ -53,16 +58,15 @@
                 android:id="@+id/tournament"
                 android:layout_width="300sp"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
                 android:ems="6"
                 android:hint="@string/tournament_name"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textSize="25sp"
-                android:textColor="@color/colorAccent"
                 android:shadowColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
-                android:backgroundTint="@color/colorAccent"
-                />
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/match_number"
