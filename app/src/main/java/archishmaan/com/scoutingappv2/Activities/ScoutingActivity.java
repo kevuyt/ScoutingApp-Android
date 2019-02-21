@@ -44,6 +44,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public CheckBox endHang;
     public CheckBox endPartPark;
     public CheckBox endFullPark;
+    public Button stash;
     public boolean duplicate = false;
     public static List<ScoutingModel> matches = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
 
-        Button stash = view.findViewById(R.id.stash);
+
         initView(view);
         stash.setOnClickListener(this);
         checkDuplicates();
@@ -179,6 +180,7 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
 
+        stash = view.findViewById(R.id.stash);
         tournament = view.findViewById(R.id.tournament);
         matchNum = view.findViewById(R.id.match_number);
         teamNum = view.findViewById(R.id.team_number);
@@ -192,17 +194,15 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         endHang = view.findViewById(R.id.end_hang);
         endPartPark = view.findViewById(R.id.end_partial_park);
         endFullPark = view.findViewById(R.id.end_full_park);
+
         if (matches.size()>0) {
             matchNum.setText(String.valueOf(matches.get(matches.size() - 1).getMatchNumber() + 1));
+            tournament.setText(matches.get(matches.size()-1).getTournament());
         }
+
         else {
         matchNum.setText(String.valueOf(1));
         }
-        if (matches.size() > 0) {
-        tournament.setText(matches.get(matches.size()-1).getTournament());
-        }
     }
-
-
 
 }

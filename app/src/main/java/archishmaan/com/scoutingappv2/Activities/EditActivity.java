@@ -38,55 +38,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
         initView(view);
         matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
-        update.setOnClickListener(v -> {
-            if (!isClear()) {
-                matches.set(matches.indexOf(updateMatch.get(0)),
-                        new ScoutingModel(
-                                tournamentEdit.getText().toString(),
-                                Integer.parseInt(matchNumEdit.getText().toString()),
-                                Integer.parseInt(teamNumEdit.getText().toString()),
-                                Integer.parseInt(depotEdit.getText().toString()),
-                                Integer.parseInt(landerEdit.getText().toString()),
-                                autoDropEdit.isChecked(),
-                                markerEdit.isChecked(),
-                                autoParkEdit.isChecked(),
-                                sampleEdit.isChecked(),
-                                doubleSampleEdit.isChecked(),
-                                endHangEdit.isChecked(),
-                                endPartParkEdit.isChecked(),
-                                endFullParkEdit.isChecked())
-                );
-
-                Matches match = new Matches();
-                match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());
-                match.setTournament(tournamentEdit.getText().toString());
-                match.setMatchNumber(Integer.parseInt(matchNumEdit.getText().toString()));
-                match.setTeamNumber(Integer.parseInt(teamNumEdit.getText().toString()));
-                match.setDepot(Integer.parseInt(depotEdit.getText().toString()));
-                match.setLander(Integer.parseInt(landerEdit.getText().toString()));
-                match.setAutoDrop(autoDropEdit.isChecked());
-                match.setMarker(markerEdit.isChecked());
-                match.setSample(sampleEdit.isChecked());
-                match.setDoubleSample(doubleSampleEdit.isChecked());
-                match.setAutoPark(autoParkEdit.isChecked());
-                match.setEndHang(endHangEdit.isChecked());
-                match.setEndPartial(endPartParkEdit.isChecked());
-                match.setFullPark(endFullParkEdit.isChecked());
-
-                matchesDatabase.matchesDao().updateMatch(match);
-                primaryKeys.add(primaryKeys.size());
-
-                Toast.makeText(getActivity(), "Updated successfully", Toast.LENGTH_SHORT).show();
-
-                updateMatch.remove(0);
-                clear();
-                assert getFragmentManager() != null;
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new DataActivity())
-                        .commit();
-            }
-        });
+        update.setOnClickListener(v -> updateMatch());
         return view;
     }
     @Override
@@ -110,7 +62,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         setHasOptionsMenu(true);
 
         update = view.findViewById((R.id.update));
-
         tournamentEdit = view.findViewById(R.id.tournament);
         matchNumEdit = view.findViewById(R.id.match_number);
         teamNumEdit = view.findViewById(R.id.team_number);
@@ -170,25 +121,7 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
                builder.setTitle("Delete Match").setMessage("Are you sure you want to delete this match? This action cannot be undone.")
                        .setPositiveButton("Yes", (dialog, which) -> {
-                           Matches match = new Matches();
-                           try {match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());}
-                           catch (Exception e) {e.printStackTrace();}
-                           match.setTournament(updateMatch.get(0).getTournament());
-                           match.setMatchNumber(updateMatch.get(0).getMatchNumber());
-                           match.setTeamNumber(updateMatch.get(0).getTeamNumber());
-                           match.setDepot(updateMatch.get(0).getDepot());
-                           match.setLander(updateMatch.get(0).getLander());
-                           match.setAutoDrop(updateMatch.get(0).isAutoDrop());
-                           match.setMarker(updateMatch.get(0).isMarker());
-                           match.setSample(updateMatch.get(0).isSample());
-                           match.setDoubleSample(updateMatch.get(0).isDoubleSample());
-                           match.setAutoPark(updateMatch.get(0).isAutoPark());
-                           match.setEndHang(updateMatch.get(0).isEndHang());
-                           match.setEndPartial(updateMatch.get(0).isEndPartial());
-                           match.setFullPark(updateMatch.get(0).isFullPark());
-
-                           matchesDatabase.matchesDao().deleteMatch(match);
-                           primaryKeys.add(primaryKeys.size());
+                           deleteMatch();
                            Toast.makeText(getActivity(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
 
                            matches.remove(updateMatch.get(0));
@@ -209,5 +142,77 @@ public class EditActivity extends Fragment implements View.OnClickListener {
            default:
                return super.onOptionsItemSelected(item);
        }
+    }
+
+
+    public void updateMatch() {
+        if (!isClear()) {
+            matches.set(matches.indexOf(updateMatch.get(0)),
+                    new ScoutingModel(
+                            tournamentEdit.getText().toString(),
+                            Integer.parseInt(matchNumEdit.getText().toString()),
+                            Integer.parseInt(teamNumEdit.getText().toString()),
+                            Integer.parseInt(depotEdit.getText().toString()),
+                            Integer.parseInt(landerEdit.getText().toString()),
+                            autoDropEdit.isChecked(),
+                            markerEdit.isChecked(),
+                            autoParkEdit.isChecked(),
+                            sampleEdit.isChecked(),
+                            doubleSampleEdit.isChecked(),
+                            endHangEdit.isChecked(),
+                            endPartParkEdit.isChecked(),
+                            endFullParkEdit.isChecked())
+            );
+
+            Matches match = new Matches();
+            match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());
+            match.setTournament(tournamentEdit.getText().toString());
+            match.setMatchNumber(Integer.parseInt(matchNumEdit.getText().toString()));
+            match.setTeamNumber(Integer.parseInt(teamNumEdit.getText().toString()));
+            match.setDepot(Integer.parseInt(depotEdit.getText().toString()));
+            match.setLander(Integer.parseInt(landerEdit.getText().toString()));
+            match.setAutoDrop(autoDropEdit.isChecked());
+            match.setMarker(markerEdit.isChecked());
+            match.setSample(sampleEdit.isChecked());
+            match.setDoubleSample(doubleSampleEdit.isChecked());
+            match.setAutoPark(autoParkEdit.isChecked());
+            match.setEndHang(endHangEdit.isChecked());
+            match.setEndPartial(endPartParkEdit.isChecked());
+            match.setFullPark(endFullParkEdit.isChecked());
+
+            matchesDatabase.matchesDao().updateMatch(match);
+            primaryKeys.add(primaryKeys.size());
+
+            Toast.makeText(getActivity(), "Updated successfully", Toast.LENGTH_SHORT).show();
+
+            updateMatch.remove(0);
+            clear();
+            assert getFragmentManager() != null;
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new DataActivity())
+                    .commit();
+        }
+    }
+    public void deleteMatch() {
+        Matches match = new Matches();
+        try {match.setId(matchesDatabase.matchesDao().getMatch(updateMatch.get(0).getMatchNumber()).get(0).getId());}
+        catch (Exception e) {e.printStackTrace();}
+        match.setTournament(updateMatch.get(0).getTournament());
+        match.setMatchNumber(updateMatch.get(0).getMatchNumber());
+        match.setTeamNumber(updateMatch.get(0).getTeamNumber());
+        match.setDepot(updateMatch.get(0).getDepot());
+        match.setLander(updateMatch.get(0).getLander());
+        match.setAutoDrop(updateMatch.get(0).isAutoDrop());
+        match.setMarker(updateMatch.get(0).isMarker());
+        match.setSample(updateMatch.get(0).isSample());
+        match.setDoubleSample(updateMatch.get(0).isDoubleSample());
+        match.setAutoPark(updateMatch.get(0).isAutoPark());
+        match.setEndHang(updateMatch.get(0).isEndHang());
+        match.setEndPartial(updateMatch.get(0).isEndPartial());
+        match.setFullPark(updateMatch.get(0).isFullPark());
+
+        matchesDatabase.matchesDao().deleteMatch(match);
+        primaryKeys.add(primaryKeys.size());
     }
 }

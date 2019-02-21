@@ -38,7 +38,6 @@ import archishmaan.com.scoutingappv2.R;
 import static archishmaan.com.scoutingappv2.Activities.MainActivity.fragment;
 import static archishmaan.com.scoutingappv2.Activities.MainActivity.matchesDatabase;
 import static archishmaan.com.scoutingappv2.Activities.ScoutingActivity.matches;
-import static archishmaan.com.scoutingappv2.R.string.export_button;
 
 /**
  * Created by Archishmaan Peyyety on 11/24/18.
@@ -68,7 +67,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     public void onClick(View view) {}
 
     public void createExportButton(Button export) {
-        export.setText(getString(export_button));
+        export.setText(getText(R.string.export_button));
         export.setTextSize(25);
         export.setWidth(1000);
         export.setHeight(125);
