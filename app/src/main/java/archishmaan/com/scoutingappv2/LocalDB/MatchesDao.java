@@ -13,20 +13,20 @@ import java.util.List;
 public interface MatchesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void addMatch(Matches matches);
+    void addMatch(Matches matches);
 
 
 
     @Query("SELECT * FROM Matches")
-    public List<Matches> getAll();
+    List<Matches> getAll();
 
     @Query("Select * FROM Matches WHERE :matchNumber = matchNumber")
-    public List<Matches> getMatch(int matchNumber);
+    List<Matches> getMatch(int matchNumber);
 
     @Update
-    public void updateMatch(Matches matches);
+    void updateMatch(Matches matches);
 
     @Delete
-    public void deleteMatch(Matches matches);
+    void deleteMatch(Matches matches);
 
 }
