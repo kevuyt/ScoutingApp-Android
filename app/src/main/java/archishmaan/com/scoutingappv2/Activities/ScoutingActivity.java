@@ -1,5 +1,6 @@
 package archishmaan.com.scoutingappv2.Activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -47,12 +49,16 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     public Button stash;
     public boolean duplicate = false;
     public static List<ScoutingModel> matches = new ArrayList<>();
+    InputMethodManager inputMethodManager;
+    ViewGroup viewGroup;
 
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.scouting_activity, container, false);
 
+        inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        viewGroup = container;
 
         initView(view);
         stash.setOnClickListener(this);
@@ -61,17 +67,25 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
+        duplicate = false;
         if (depot.getText().toString().equals("")) createDialog("Empty Depot", "Did this team score in the depot?", depot);
         if (lander.getText().toString().equals("")) createDialog("Empty Lander", "Did this team score in the lander?", lander);
         if (isNotClear()) {
             if (!duplicate) {
-            createMatch();
-            clear();
-            }
-            else {
-                Toast.makeText(getActivity(), "Make sure you filled in all details!", Toast.LENGTH_LONG).show();
+                createMatch();
+                clear();
             }
         }
+        else if (teamNum.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Don't forget to fill in the Team Number", Toast.LENGTH_SHORT).show();
+        }
+        else if (tournament.getText().toString().equals("")) {
+            Toast.makeText(getActivity(), "Don't forget to fill in the Tournament Name", Toast.LENGTH_SHORT).show();
+        }
+        else if (matchNum.getText().toString().equals("")) {
+            Toast.makeText(getActivity(), "Don't forget to fill in the Match Number", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public void createDialog(String title, String message, EditText scoringArea) {
         AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(Objects.requireNonNull(getActivity()));
@@ -179,6 +193,8 @@ public class ScoutingActivity extends Fragment implements View.OnClickListener{
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
+
+        inputMethodManager.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);
 
         stash = view.findViewById(R.id.stash);
         tournament = view.findViewById(R.id.tournament);

@@ -2,6 +2,7 @@ package archishmaan.com.scoutingappv2.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentContainer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +22,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -52,11 +56,16 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     int requestValue = 0;
     LinearLayout linearLayout;
     static List<ScoutingModel> updateMatch = new ArrayList<>();
+    InputMethodManager inputMethodManager;
+    ViewGroup viewGroup;
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.data_activity, container, false);
+
+        inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        viewGroup = container;
 
         initView(view);
 
@@ -74,8 +83,10 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         export.getBackground().setColorFilter(Color.parseColor("#DAA620"), PorterDuff.Mode.DARKEN);
         linearLayout.addView(export);
         export.setOnClickListener(v -> createCSV());
+        TextView textView = new TextView(getContext());
+        textView.setHeight(150);
+        linearLayout.addView(textView);
     }
-
 
     @SuppressLint("SetTextI18n")
     public void createButton(Button button, ScoutingModel match){
@@ -108,7 +119,6 @@ public class DataActivity extends Fragment implements View.OnClickListener {
     }
 
     public void createCSV() {
-
         if (matches.size()>0) {
             String filename = "Scouting Data " + matches.get(0).getTournament() + String.valueOf(matches.get(matches.size() - 1).getMatchNumber()) + ".csv";
 
@@ -130,7 +140,7 @@ public class DataActivity extends Fragment implements View.OnClickListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            Toast.makeText(getActivity(), "Exported Successfully", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(getActivity(), "No matches to export", Toast.LENGTH_SHORT).show();
@@ -181,6 +191,8 @@ public class DataActivity extends Fragment implements View.OnClickListener {
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+
+        inputMethodManager.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);
 
         for (ScoutingModel match : matches) {
             score = 0;

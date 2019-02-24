@@ -10,8 +10,6 @@
     tools:context=".Activities.ScoutingActivity"
     android:background="@color/colorBlack">
 
-
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"

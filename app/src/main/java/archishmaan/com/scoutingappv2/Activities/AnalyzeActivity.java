@@ -1,5 +1,6 @@
 package archishmaan.com.scoutingappv2.Activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+
+import java.util.Objects;
 
 import archishmaan.com.scoutingappv2.R;
 
@@ -17,11 +21,15 @@ import archishmaan.com.scoutingappv2.R;
  * Project: ScoutingApp
  */
 public class AnalyzeActivity extends Fragment {
+    InputMethodManager inputMethodManager;
+    ViewGroup viewGroup;
     @Nullable
     @Override
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
       View view = inflater.inflate(R.layout.analysis_activity, container, false);
 
+        inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        viewGroup = container;
         initView(view);
 
       return view;
@@ -33,5 +41,7 @@ public class AnalyzeActivity extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         assert mainActivity != null;
         mainActivity.setSupportActionBar(toolbar);
+
+        inputMethodManager.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);
     }
 }

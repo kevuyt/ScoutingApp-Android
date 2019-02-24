@@ -1,5 +1,6 @@
 package archishmaan.com.scoutingappv2.Activities;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -34,8 +36,12 @@ public class EditActivity extends Fragment implements View.OnClickListener {
     int matchesIndex;
     EditText tournamentEdit, matchNumEdit, teamNumEdit, depotEdit, landerEdit;
     CheckBox autoDropEdit, markerEdit, autoParkEdit, sampleEdit, doubleSampleEdit, endHangEdit, endPartParkEdit, endFullParkEdit;
+    InputMethodManager inputMethodManager;
+    ViewGroup viewGroup;
     public View onCreateView (@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_activity, container, false);
+        inputMethodManager = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+        viewGroup = container;
         initView(view);
         matchesIndex = updateMatch.get(0).getMatchNumber() - 1;
         update.setOnClickListener(v -> updateMatch());
@@ -60,6 +66,8 @@ public class EditActivity extends Fragment implements View.OnClickListener {
         mainActivity.setSupportActionBar(toolbar);
 
         setHasOptionsMenu(true);
+
+        inputMethodManager.hideSoftInputFromWindow(viewGroup.getWindowToken(), 0);
 
         update = view.findViewById((R.id.update));
         tournamentEdit = view.findViewById(R.id.tournament);
@@ -143,7 +151,6 @@ public class EditActivity extends Fragment implements View.OnClickListener {
                return super.onOptionsItemSelected(item);
        }
     }
-
 
     public void updateMatch() {
         if (!isClear()) {
